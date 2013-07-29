@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<system xmlns="http://www.eiffel.com/developers/xml/configuration-1-10-0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.eiffel.com/developers/xml/configuration-1-10-0 http://www.eiffel.com/developers/xml/configuration-1-10-0.xsd" name="tests" uuid="FE368136-51DC-4A67-B657-B26A93F0EE6D">
+<system xmlns="http://www.eiffel.com/developers/xml/configuration-1-11-0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.eiffel.com/developers/xml/configuration-1-11-0 http://www.eiffel.com/developers/xml/configuration-1-11-0.xsd" name="tests" uuid="FE368136-51DC-4A67-B657-B26A93F0EE6D">
 	<target name="tests">
 		<root class="APPLICATION" feature="make"/>
 		<file_rule>
@@ -7,18 +7,18 @@
 			<exclude>/EIFGENs$</exclude>
 			<exclude>/.svn$</exclude>
 		</file_rule>
-		<option warning="true" full_class_checking="true" is_attached_by_default="true" void_safety="all" syntax="standard">
+		<option warning="true" full_class_checking="true" is_attached_by_default="true" void_safety="transitional" syntax="standard">
 		</option>
 		<setting name="concurrency" value="none"/>
 		<library name="base" location="$ISE_LIBRARY\library\base\base-safe.ecf"/>
 		<library name="curl" location="$ISE_LIBRARY\library\cURL\cURL-safe.ecf"/>
+		<library name="encoder" location="$ISE_LIBRARY\contrib\library\web\framework\ewf\text\encoder\encoder-safe.ecf"/>
+		<library name="http_client" location="$ISE_LIBRARY\contrib\library\network\http_client\http_client-safe.ecf"/>
 		<library name="json" location="$ISE_LIBRARY\contrib\library\text\parser\json\library\json-safe.ecf"/>
-		<library name="encoder" location="$EIFFEL_LIBRARY/contrib/library/web/framework/ewf/text/encoder/encoder-safe.ecf"/>
-		<library name="http_client" location="$EIFFEL_LIBRARY/contrib/library/network/http_client/http_client-safe.ecf"/>
+		<library name="eel" location="$ISE_LIBRARY/contrib/library/text/encryption/eel/eel-safe.ecf"/>
+		<library name="eapml" location="$ISE_LIBRARY/contrib/library/math/eapml/eapml-safe.ecf"/>
 		<library name="oauth_consumer" location="..\oauth_consumer-safe.ecf" readonly="false"/>
-		<!--
-			 <override name="private" location=".\private\" recursive="true"/>
-			 -->
+		<library name="testing" location="$ISE_LIBRARY\library\testing\testing-safe.ecf"/>
 		<cluster name="tests" location=".\src\" recursive="true"/>
 	</target>
 </system>
