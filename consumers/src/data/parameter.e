@@ -37,7 +37,10 @@ feature -- Comparision
 		do
 			if key.is_less (other.key) then
 				Result := True
-			end
+			elseif key.is_equal (other.key) and then
+				   value.is_less (other.value) then
+				Result := True
+ 			end
 		end
 
 end
