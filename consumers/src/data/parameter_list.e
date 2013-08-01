@@ -84,6 +84,7 @@ feature --
 					l_builder.append (param_separator)
 					l_builder.append (elem.item.as_url_encoded)
 				end
+				l_builder.remove (1)
 				Result := l_builder
 			end
 		end

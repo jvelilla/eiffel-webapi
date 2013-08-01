@@ -8,16 +8,17 @@ class
 	REQUEST_EXECUTOR
 	inherit
 	HTTP_CLIENT_HELPER
+	HTTP_CONSTANTS
 create
 	make
 feature {NONE} -- Initialization
 	make (a_url: like base_url; a_method : READABLE_STRING_GENERAL)
 		do
 			set_base_url (a_url)
-			method := a_method
+			verb := a_method
 		ensure
 			base_url_set : base_url = a_url
-			method_set : method = a_method
+			method_set : verb = a_method
 		end
 
 
@@ -27,8 +28,44 @@ feature {NONE} -- Initialization
 		end
 
 feature -- Access		
-	method : READABLE_STRING_GENERAL
+	verb : READABLE_STRING_GENERAL
 		-- HTTP METHOD (Get, Post, ...)
 
+	body : detachable READABLE_STRING_8
+		-- body content
+
+feature -- Element Change
+	set_body ( a_body : like body)
+		do
+			body := a_body
+		ensure
+			body_set : body = a_body
+		end
+
+feature -- Execute
+	execute : detachable HTTP_CLIENT_RESPONSE
+			-- Http executor
+		do
+				if verb.same_string (method_connect) then
+					Result := Void -- not supported for now
+				elseif verb.same_string (method_delete) then
+					Result := execute_delete ("")
+				elseif verb.same_string (method_get) then
+					Result := execute_get ("")
+				elseif verb.same_string (method_head) then
+					Result := Void
+				elseif verb.same_string (method_options) then
+					Result := Void
+				elseif verb.same_string (method_patch) then
+					Result := Void
+				elseif verb.same_string (method_post) then
+					Result := execute_post ("", body)
+				elseif verb.same_string (method_put) then
+					Result := execute_put ("", body)
+				elseif verb.same_string (method_trace) then
+					Result := Void
+				end
+			end
 
 end
+

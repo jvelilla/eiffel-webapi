@@ -99,21 +99,40 @@ feature {NONE} -- Implementation
 		do
 			if attached executor as l_executor then
 				-- add headers
-
-				from headers.start
-				until
-					headers.after
-				loop
-					l_executor.context_executor.add_header (headers.key_for_iteration.as_string_32,headers.item_for_iteration.as_string_32)
-					headers.forth
-				end
+				add_headers (l_executor)
 				if verb.same_string (method_put) or else verb.same_string (method_post) then
-
+					l_executor.set_body (body_contents.as_string_8)
+				end
+				if not l_executor.context_executor.headers.has (content_type) then
+					l_executor.context_executor.add_header (content_type, default_content_type)
+				end
+				if attached l_executor.execute as l_response then
+					create Result.make (l_response)
 				end
 			end
 		end
 
 
+feature {NONE} -- Implementation
+	add_headers (a_executor : REQUEST_EXECUTOR)
+		do
+				from headers.start
+				until
+					headers.after
+				loop
+					a_executor.context_executor.add_header (headers.key_for_iteration.as_string_32,headers.item_for_iteration.as_string_32)
+					headers.forth
+				end
+		end
 
+
+	body_contents : READABLE_STRING_GENERAL
+		do
+			if attached payload as l_payload then
+				Result := l_payload
+			else
+				Result := body_parameters.as_form_url_encoded_string
+			end
+		end
 
 end

@@ -9,6 +9,11 @@ note
 
 class
 	OAUTH_TOKEN
+	inherit
+		ANY
+		redefine
+			is_equal
+		end
 create
 	make_empty,
 	make_token_secret,
@@ -43,6 +48,15 @@ feature {NONE} -- Initilization
 			secret_set : secret.same_string (a_secret)
 		end
 
+feature -- Comparison
+
+	is_equal ( other : like Current) : BOOLEAN
+		do
+			if token.same_string (other.token) and then
+				secret.same_string (other.secret) then
+					Result := True
+			end
+		end
 
 feature -- Access
 	token : STRING
