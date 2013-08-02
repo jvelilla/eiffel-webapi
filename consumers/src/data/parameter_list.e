@@ -128,6 +128,10 @@ feature -- Status Report
 			Result := parameters.has (a_param)
 		end
 
+	count : INTEGER_32
+		do
+			Result := parameters.count
+		end
 feature -- Sort
 	sort : PARAMETER_LIST
 		local

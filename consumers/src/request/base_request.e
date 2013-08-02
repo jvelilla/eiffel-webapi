@@ -19,18 +19,36 @@ feature {NONE} -- Initialization
 	make (a_method: READABLE_STRING_GENERAL; a_uri: READABLE_STRING_GENERAL)
 		require
 			valid_http_method: is_http_method (a_method)
+			valid_uri : is_valid_uri (a_uri)
 		do
 			verb := a_method
 			uri := a_uri
 			create query_string_parameters.default_create
 			create body_parameters.default_create
 			create headers.make (5)
+			add_query_parameters
 		ensure
 			ver_set: verb = a_method
 			uri_set: uri = a_uri
 		end
 
 feature -- Status Report
+
+	is_valid_uri (a_uri : READABLE_STRING_GENERAL) : BOOLEAN
+		local
+			l_uri : URI
+		do
+			create l_uri.make_from_string (a_uri.as_string_8)
+			Result := l_uri.is_valid
+		end
+
+	query_string : detachable READABLE_STRING_GENERAL
+		local
+			l_uri : URI
+		do
+			create l_uri.make_from_string (uri.as_string_8)
+			Result := l_uri.query
+		end
 
 	is_http_method (a_method: READABLE_STRING_GENERAL): BOOLEAN
 		do
@@ -82,6 +100,29 @@ feature -- Access
 
 	executor : detachable REQUEST_EXECUTOR
 
+feature -- Change Element
+	add_body_parameter (a_key : READABLE_STRING_GENERAL; a_value : READABLE_STRING_GENERAL)
+		do
+			body_parameters.add_parameter (a_key.as_string_32, a_value.as_string_32)
+		end
+
+	add_payload (a_payload : like payload)
+		do
+			payload := a_payload
+		ensure
+			payload_set : attached payload as l_payload implies l_payload = a_payload
+		end
+
+
+	add_query_string_parameter ( key : READABLE_STRING_GENERAL; value : READABLE_STRING_GENERAL)
+			-- Add a query string parameter
+		do
+			query_string_parameters.add_parameter (key.as_string_8, value.as_string_8)
+		ensure
+			one_more_parameter : old query_string_parameters.count + 1 = query_string_parameters.count
+		end
+
+
 feature -- Execute
 	execute : detachable OAUTH_RESPONSE
 		do
@@ -132,6 +173,13 @@ feature {NONE} -- Implementation
 				Result := l_payload
 			else
 				Result := body_parameters.as_form_url_encoded_string
+			end
+		end
+
+	add_query_parameters
+		do
+			if attached query_string as l_query then
+				query_string_parameters.add_query_string (l_query)
 			end
 		end
 

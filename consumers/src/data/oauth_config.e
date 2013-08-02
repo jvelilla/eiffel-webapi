@@ -50,19 +50,4 @@ feature -- Status Report
 			Result := attached scope
 		end
 
---  public void log(String message)
---  {
---    if (debugStream != null)
---    {
---      message = message + "\n";
---      try
---      {
---        debugStream.write(message.getBytes("UTF8"));
---      }
---      catch (Exception e)
---      {
---        throw new RuntimeException("there were problems while writting to the debug stream", e);
---      }
---    }
---  }
 end
