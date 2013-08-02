@@ -16,8 +16,8 @@ feature -- Extractor
 		do
 			create l_json_parser.make_parser (response.as_string_8)
 			if attached {JSON_OBJECT}l_json_parser.parse_object as l_object then
-				if attached {JSON_VALUE} l_object.item ("access_token") as l_value then
-					create Result.make_token_secret_response (l_value.representation, "",response.as_string_8 )
+				if attached {JSON_STRING} l_object.item ("access_token") as l_value then
+					create Result.make_token_secret_response (l_value.item, "",response.as_string_8 )
 				end
 			end
 		end
