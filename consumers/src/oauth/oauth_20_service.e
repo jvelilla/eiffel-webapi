@@ -27,7 +27,7 @@ feature {NONE}-- Initialization
 
 feature -- Access
 
-		access_token (a_request_token : OAUTH_TOKEN; verifier : OAUTH_VERIFIER) : detachable OAUTH_TOKEN
+		access_token (da_request_token : detachable OAUTH_TOKEN; verifier : OAUTH_VERIFIER) : detachable OAUTH_TOKEN
 				-- retrive an access token using a request token
 				-- (obtained previously)
 			local
@@ -61,7 +61,7 @@ feature -- Access
 
 
 
-		authorization_url (a_request_token : OAUTH_TOKEN) : READABLE_STRING_GENERAL
+		authorization_url (a_request_token : detachable OAUTH_TOKEN) : detachable READABLE_STRING_GENERAL
 				-- URL where you should redirect your users to authenticate
    				-- your application.
    				-- a request token needed to authorize

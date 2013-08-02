@@ -25,7 +25,7 @@ feature -- Access
 		deferred
 		end
 
-	authorization_url ( condig : OAUTH_CONFIG) : READABLE_STRING_GENERAL
+	authorization_url ( config : OAUTH_CONFIG) : detachable READABLE_STRING_GENERAL
 			-- Url where you should redirect your users to authneticate
 		deferred
 		end

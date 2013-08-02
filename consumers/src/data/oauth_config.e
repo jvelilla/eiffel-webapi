@@ -49,5 +49,11 @@ feature -- Status Report
 		do
 			Result := attached scope
 		end
-
+feature -- Change Element
+	set_callback ( a_callback : like callback)
+		do
+			callback := a_callback
+		ensure
+			callback_set : attached callback as l_callback implies l_callback = a_callback
+		end
 end
