@@ -1,20 +1,31 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+﻿<?xml version="1.0" encoding="ISO-8859-1"?>
 <system xmlns="http://www.eiffel.com/developers/xml/configuration-1-11-0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.eiffel.com/developers/xml/configuration-1-11-0 http://www.eiffel.com/developers/xml/configuration-1-11-0.xsd" name="examples" uuid="533DEB07-C4A6-4EEE-8EC1-4F09DC203A26">
-	<target name="examples">
-		<root feature="make" class="APPLICATION"/>
+	<target name="oauth_20_examples">
 		<option warning="true">
 			<assertions precondition="true" postcondition="true" check="true" invariant="true" loop="true" supplier_precondition="true"/>
 		</option>
 		<setting name="console_application" value="true"/>
-		<precompile name="base_pre" location="$ISE_PRECOMP/base-safe.ecf"/>
-		<library name="base" location="$ISE_LIBRARY/library/base/base-safe.ecf"/>
-		<library name="oauth_consumer" location="../oauth_consumer-safe.ecf"/>
+		<precompile name="base_pre" location="$ISE_PRECOMP\base-safe.ecf"/>
+		<library name="base" location="$ISE_LIBRARY\library\base\base-safe.ecf"/>
+		<library name="oauth_consumer" location="..\oauth_consumer-safe.ecf"/>
 		<cluster name="examples" location=".\" recursive="true">
 			<file_rule>
 				<exclude>/EIFGENs$</exclude>
-				<exclude>/.svn$</exclude>
 				<exclude>/CVS$</exclude>
+				<exclude>/.svn$</exclude>
 			</file_rule>
 		</cluster>
 	</target>
+	
+	<target name="foursquare_example" extends="oauth_20_examples">
+		<root class="FOURSQUARE_API_20_EXAMPLE" feature="make"/>
+	</target>
+	<target name="box_example" extends="oauth_20_examples">
+		<root class="BOX_API_20_EXAMPLE" feature="make"/>
+	</target>
+	
+	<target name="campaing_example" extends="oauth_20_examples">
+		<root class="CAMPAING_MONITOR_API_20_EXAMPLE" feature="make"/>
+	</target>
+
 </system>

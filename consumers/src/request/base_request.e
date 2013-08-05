@@ -122,6 +122,10 @@ feature -- Change Element
 			one_more_parameter : old query_string_parameters.count + 1 = query_string_parameters.count
 		end
 
+	add_header ( key : READABLE_STRING_GENERAL; value : READABLE_STRING_GENERAL)
+		do
+			headers.force (value.as_string_32, key)
+		end
 
 feature -- Execute
 	execute : detachable OAUTH_RESPONSE

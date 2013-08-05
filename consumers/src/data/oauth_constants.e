@@ -35,5 +35,6 @@ feature -- OAuth2.0
 	CLIENT_SECRET : STRING = "client_secret";
 	REDIRECT_URI : STRING = "redirect_uri";
 	CODE : STRING = "code";
-
+	GRANT_TYPE : STRING = "grant_type"
+	AUTHORIZATION_CODE : STRING = "authorization_code"
 end

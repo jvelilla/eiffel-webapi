@@ -4,7 +4,7 @@ note
 	revision    : "$Revision$"
 
 class
-	APPLICATION
+	FOURSQUARE_API_20_EXAMPLE
 
 inherit
 	ARGUMENTS
@@ -39,7 +39,7 @@ feature {NONE} -- Initialization
 			    io.read_line
 			end
 
-		   access_token := api_service.access_token (empty_token, create {OAUTH_VERIFIER}.make (io.last_string))
+		   access_token := api_service.access_token_get (empty_token, create {OAUTH_VERIFIER}.make (io.last_string))
 		   if attached access_token as l_access_token then
 		   		print("%NGot the Access Token!%N");
     	   		print("%N(Token: " + l_access_token.debug_output + " )%N");

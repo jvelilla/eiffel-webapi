@@ -27,7 +27,7 @@ feature {NONE}-- Initialization
 
 feature -- Access
 
-		access_token (da_request_token : detachable OAUTH_TOKEN; verifier : OAUTH_VERIFIER) : detachable OAUTH_TOKEN
+		access_token_get (da_request_token : detachable OAUTH_TOKEN; verifier : OAUTH_VERIFIER) : detachable OAUTH_TOKEN
 				-- retrive an access token using a request token
 				-- (obtained previously)
 			local
@@ -45,6 +45,33 @@ feature -- Access
 
 				if config.has_scope and then attached config.scope as l_scope then
 					l_request.add_query_string_parameter ({OAUTH_CONSTANTS}.scope, l_scope)
+				end
+				if attached l_request.execute as l_response then
+					if attached l_response.body as l_body then
+						Result := api.access_token_extractor.extract (l_body)
+					end
+				end
+			end
+
+		access_token_post (da_request_token : detachable OAUTH_TOKEN; verifier : OAUTH_VERIFIER) : detachable OAUTH_TOKEN
+				-- retrive an access token using a request token
+				-- (obtained previously)
+			local
+				l_request : OAUTH_REQUEST
+			do
+				create l_request.make (api.access_token_verb, api.access_token_endpoint)
+				l_request.add_body_parameter ({OAUTH_CONSTANTS}.grant_type, {OAUTH_CONSTANTS}.authorization_code)
+				l_request.add_body_parameter ({OAUTH_CONSTANTS}.client_id, config.api_key)
+				l_request.add_body_parameter  ({OAUTH_CONSTANTS}.client_secret, config.api_secret)
+
+				l_request.add_body_parameter  ({OAUTH_CONSTANTS}.code, verifier.value)
+
+				if attached config.callback as l_callback then
+					l_request.add_body_parameter  ({OAUTH_CONSTANTS}.redirect_uri, l_callback)
+				end
+
+				if config.has_scope and then attached config.scope as l_scope then
+					l_request.add_body_parameter  ({OAUTH_CONSTANTS}.scope, l_scope)
 				end
 				if attached l_request.execute as l_response then
 					if attached l_response.body as l_body then

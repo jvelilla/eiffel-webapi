@@ -15,11 +15,18 @@ feature -- Access
 			deferred
 			end
 
-		access_token (a_request_token : detachable OAUTH_TOKEN; verifier : OAUTH_VERIFIER) : detachable OAUTH_TOKEN
-				-- retrive an access token using a request token
+		access_token_get (a_request_token : detachable OAUTH_TOKEN; verifier : OAUTH_VERIFIER) : detachable OAUTH_TOKEN
+				-- retrive an access token using a request token using GET
 				-- (obtained previously)
 			deferred
 			end
+
+		access_token_post (a_request_token : detachable OAUTH_TOKEN; verifier : OAUTH_VERIFIER) : detachable OAUTH_TOKEN
+					-- retrive an access token using a request token using POST
+					-- (obtained previously)
+				deferred
+				end
+
 
 		sign_request (an_access_token : OAUTH_TOKEN; a_req : OAUTH_REQUEST)
 				-- Signs an OAuth request using an access token (obtained previously)

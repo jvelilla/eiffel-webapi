@@ -56,4 +56,11 @@ feature -- Change Element
 		ensure
 			callback_set : attached callback as l_callback implies l_callback = a_callback
 		end
+
+	set_scope (a_scope : READABLE_STRING_GENERAL)
+		do
+			scope := a_scope
+		ensure
+			scope_set : attached scope as l_scope implies l_scope = a_scope
+		end
 end
