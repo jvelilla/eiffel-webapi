@@ -37,10 +37,8 @@ feature -- Access
 				l_request.add_query_string_parameter ({OAUTH_CONSTANTS}.client_id, config.api_key)
 				l_request.add_query_string_parameter ({OAUTH_CONSTANTS}.client_secret, config.api_secret)
 
-				if not verifier.value.is_empty then
-					l_request.add_query_string_parameter ({OAUTH_CONSTANTS}.code, verifier.value)
-				end
-				
+				l_request.add_query_string_parameter ({OAUTH_CONSTANTS}.code, verifier.value)
+
 				if attached config.callback as l_callback then
 					l_request.add_query_string_parameter ({OAUTH_CONSTANTS}.redirect_uri, l_callback)
 				end
@@ -55,7 +53,7 @@ feature -- Access
 				end
 			end
 
-		access_token_post (da_request_token : detachable OAUTH_TOKEN; verifier : OAUTH_VERIFIER) : detachable OAUTH_TOKEN
+		access_token_post (da_request_token : detachable OAUTH_TOKEN; verifier : detachable OAUTH_VERIFIER) : detachable OAUTH_TOKEN
 				-- retrive an access token using a request token
 				-- (obtained previously)
 			local
@@ -66,7 +64,10 @@ feature -- Access
 				l_request.add_body_parameter ({OAUTH_CONSTANTS}.client_id, config.api_key)
 				l_request.add_body_parameter  ({OAUTH_CONSTANTS}.client_secret, config.api_secret)
 
-				l_request.add_body_parameter  ({OAUTH_CONSTANTS}.code, verifier.value)
+				if attached verifier  as l_verifier then
+					l_request.add_body_parameter  ({OAUTH_CONSTANTS}.code, l_verifier.value)
+				end
+
 
 				if attached config.callback as l_callback then
 					l_request.add_body_parameter  ({OAUTH_CONSTANTS}.redirect_uri, l_callback)

@@ -27,5 +27,14 @@
 	<target name="campaing_example" extends="oauth_20_examples">
 		<root class="CAMPAING_MONITOR_API_20_EXAMPLE" feature="make"/>
 	</target>
+	
+	<target name="geoloqi_example" extends="oauth_20_examples">
+		<root class="GEOLOQUI_API_20_EXAMPLE" feature="make"/>
+	</target>
+	
+	<target name="google_example" extends="oauth_20_examples">
+		<root class="GOOGLE_OAUTH_API_20_EXAMPLE" feature="make"/>
+	</target>
+
 
 </system>

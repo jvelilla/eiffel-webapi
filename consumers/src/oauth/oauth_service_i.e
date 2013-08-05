@@ -21,7 +21,7 @@ feature -- Access
 			deferred
 			end
 
-		access_token_post (a_request_token : detachable OAUTH_TOKEN; verifier : OAUTH_VERIFIER) : detachable OAUTH_TOKEN
+		access_token_post (a_request_token : detachable OAUTH_TOKEN; verifier : detachable OAUTH_VERIFIER) : detachable OAUTH_TOKEN
 					-- retrive an access token using a request token using POST
 					-- (obtained previously)
 				deferred
