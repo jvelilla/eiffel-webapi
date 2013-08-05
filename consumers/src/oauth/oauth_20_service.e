@@ -37,8 +37,10 @@ feature -- Access
 				l_request.add_query_string_parameter ({OAUTH_CONSTANTS}.client_id, config.api_key)
 				l_request.add_query_string_parameter ({OAUTH_CONSTANTS}.client_secret, config.api_secret)
 
-				l_request.add_query_string_parameter ({OAUTH_CONSTANTS}.code, verifier.value)
-
+				if not verifier.value.is_empty then
+					l_request.add_query_string_parameter ({OAUTH_CONSTANTS}.code, verifier.value)
+				end
+				
 				if attached config.callback as l_callback then
 					l_request.add_query_string_parameter ({OAUTH_CONSTANTS}.redirect_uri, l_callback)
 				end
