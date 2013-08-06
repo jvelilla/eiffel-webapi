@@ -35,6 +35,10 @@
 	<target name="google_example" extends="oauth_20_examples">
 		<root class="GOOGLE_OAUTH_API_20_EXAMPLE" feature="make"/>
 	</target>
+	
+	<target name="paypal_example" extends="oauth_20_examples">
+		<root class="PAYPAL_OAUTH_API_20_EXAMPLE" feature="make"/>
+	</target>
 
 
 </system>

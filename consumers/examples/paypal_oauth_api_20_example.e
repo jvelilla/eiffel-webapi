@@ -1,18 +1,17 @@
 note
-	description: "Summary description for {GOOGLE_OAUTH_API_20_EXAMPLE}."
+	description: "Summary description for {PAYPAL_OAUTH_API_20_EXAMPLE}."
 	author: ""
 	date: "$Date$"
 	revision: "$Revision$"
 
 class
-	GOOGLE_OAUTH_API_20_EXAMPLE
-
+	PAYPAL_OAUTH_API_20_EXAMPLE
 create
 	make
 feature -- Access	
 	make
 		local
-			box : OAUTH_GOOGLE_API_20
+			box : OAUTH_PAYPAL_API_20
 			config : OAUTH_CONFIG
 			api_service : OAUTH_SERVICE_I
 			request : OAUTH_REQUEST
@@ -20,22 +19,12 @@ feature -- Access
 		do
 			create config.make_default (api_key, api_secret)
 			config.set_callback ("http://127.0.0.1")
-			config.set_scope ("https://www.googleapis.com/auth/books")
+			config.set_grant_type ("client_credentials")
 			create box
 			api_service := box.create_service (config)
-			print ("%N===Google OAuth Workflow ===%N")
+			print ("%N===Paypal OAuth Workflow ===%N")
 
-			-- Obtain the Authorization URL
-    		print("%NFetching the Authorization URL...");
-    		if attached api_service.authorization_url (empty_token) as lauthorization_url then
-			    print("%NGot the Authorization URL!%N");
-			    print("%NNow go and authorize here:%N");
-			    print(lauthorization_url);
-			    print("%NAnd paste the authorization code here%N");
-			    io.read_line
-			end
-
-		   access_token := api_service.access_token_post (empty_token, create {OAUTH_VERIFIER}.make (io.last_string))
+		   access_token := api_service.access_token_post (empty_token, Void)
 		   if attached access_token as l_access_token then
 		   		print("%NGot the Access Token!%N");
     	   		print("%N(Token: " + l_access_token.debug_output + " )%N");
@@ -60,9 +49,10 @@ feature -- Access
 
 feature {NONE} -- Implementation
 
-	api_key : STRING ="COMPLETE"
-	api_secret :STRING ="COMPLETE"
-	protected_resource_url : STRING = "https://www.googleapis.com/auth/books"
+	api_key : STRING ="AdzYXxATcMSu80k-KDbNRJWv5_nXtCO0gNCxzMcRH1hoCAz2ldpM6fae2UHO"
+	api_secret :STRING ="EH4OmxCbGyTpGhS_NyR7ujQlS2vglUwv0mgQ9TDN6ovTMD_csIjY2D3Fu67-"
+	protected_resource_url : STRING = "https://api.sandbox.paypal.com/v1/payments/"
  	empty_token : detachable  OAUTH_TOKEN
+
 
 end

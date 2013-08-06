@@ -43,6 +43,7 @@ feature -- Access
 	signature_type : detachable OAUTH_SIGNATURE_TYPE
 	scope : detachable READABLE_STRING_GENERAL
 	debug_stream : detachable STRING
+	grant_type : detachable STRING
 
 feature -- Status Report
 	has_scope : BOOLEAN
@@ -62,5 +63,12 @@ feature -- Change Element
 			scope := a_scope
 		ensure
 			scope_set : attached scope as l_scope implies l_scope = a_scope
+		end
+
+	set_grant_type ( a_type : READABLE_STRING_GENERAL)
+		do
+			grant_type := a_type.as_string_32
+		ensure
+			grant_type_set : attached grant_type as l_grant_type implies l_grant_type = a_type
 		end
 end

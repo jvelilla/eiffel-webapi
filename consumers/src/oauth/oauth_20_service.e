@@ -60,7 +60,11 @@ feature -- Access
 				l_request : OAUTH_REQUEST
 			do
 				create l_request.make (api.access_token_verb, api.access_token_endpoint)
-				l_request.add_body_parameter ({OAUTH_CONSTANTS}.grant_type, {OAUTH_CONSTANTS}.authorization_code)
+				if attached config.grant_type  as l_grant_type then
+					l_request.add_body_parameter ({OAUTH_CONSTANTS}.grant_type, l_grant_type)
+				else
+					l_request.add_body_parameter ({OAUTH_CONSTANTS}.grant_type, {OAUTH_CONSTANTS}.authorization_code)
+				end
 				l_request.add_body_parameter ({OAUTH_CONSTANTS}.client_id, config.api_key)
 				l_request.add_body_parameter  ({OAUTH_CONSTANTS}.client_secret, config.api_secret)
 

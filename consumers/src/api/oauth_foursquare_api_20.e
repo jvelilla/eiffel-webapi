@@ -3,7 +3,7 @@ note
 	author: ""
 	date: "$Date$"
 	revision: "$Revision$"
-
+	EIS: "name: OAuth2 foursquare", "src:https://developer.foursquare.com/overview/auth", "protocol:uri"
 class
 	OAUTH_FOURSQUARE_API_20
 

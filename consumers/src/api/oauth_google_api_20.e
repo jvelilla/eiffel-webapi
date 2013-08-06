@@ -3,6 +3,7 @@ note
 	author: ""
 	date: "$Date$"
 	revision: "$Revision$"
+	EIS : "name:OAuth2 google apis", "src:https://developers.google.com/accounts/docs/OAuth2", "protocol:uri"
 
 class
 	OAUTH_GOOGLE_API_20
