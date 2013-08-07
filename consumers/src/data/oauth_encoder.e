@@ -7,7 +7,8 @@ note
 class
 	OAUTH_ENCODER
 
-feature  -- Encode
+feature -- Encode
+
 	encoded_string (s: STRING_32): STRING_8
 		do
 			Result := url_encoder.encoded_string (s)
@@ -15,7 +16,7 @@ feature  -- Encode
 
 feature -- Decode
 
-	decoded_string (s : STRING_8) : STRING_32
+	decoded_string (s: STRING_8): STRING_32
 		do
 			Result := url_encoder.decoded_string (s)
 		end
@@ -26,6 +27,5 @@ feature {NONE} -- Implementation
 		once
 			create Result
 		end
-
 
 end

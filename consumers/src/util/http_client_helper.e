@@ -8,6 +8,7 @@ deferred class
 	HTTP_CLIENT_HELPER
 
 feature -- Access
+
 	http_session: detachable HTTP_CLIENT_SESSION
 
 	get_http_session
@@ -22,7 +23,6 @@ feature -- Access
 			end
 			base_url.left_adjust
 			base_url.right_justify
-
 			if attached {HTTP_CLIENT_SESSION} h.new_session (base_url) as sess then
 				http_session := sess
 				sess.set_timeout (-1)
@@ -30,11 +30,12 @@ feature -- Access
 				sess.set_connect_timeout (-1)
 				sess.set_is_insecure (True)
 				sess.set_any_auth_type
---				sess.set_proxy ("127.0.0.1", 8888) --| inspect traffic with http://www.fiddler2.com/								
+					--				sess.set_proxy ("127.0.0.1", 8888) --| inspect traffic with http://www.fiddler2.com/
 			end
 		end
 
 feature -- HTTP client helpers
+
 	execute_get (command_name: STRING_32): detachable HTTP_CLIENT_RESPONSE
 		do
 			get_http_session
@@ -73,6 +74,6 @@ feature -- HTTP client helpers
 			create Result.make
 		end
 
-	base_url : STRING
+	base_url: STRING
 
 end

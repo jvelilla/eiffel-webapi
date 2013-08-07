@@ -7,11 +7,11 @@ note
 deferred class
 	OAUTH_API
 
-
 feature -- Service
 
-	 create_service (config : OAUTH_CONFIG) : OAUTH_SERVICE_I
-	 		-- Create a service
-	 	deferred
-	 	end
+	create_service (config: OAUTH_CONFIG): OAUTH_SERVICE_I
+			-- Create a service
+		deferred
+		end
+
 end

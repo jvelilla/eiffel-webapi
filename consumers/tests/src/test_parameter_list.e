@@ -83,6 +83,6 @@ feature -- Tests
 
 feature {NONE} -- Implementation
 
-	parameters: PARAMETER_LIST
+	parameters: OAUTH_PARAMETER_LIST
 
 end

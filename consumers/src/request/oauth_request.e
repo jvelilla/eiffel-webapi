@@ -23,11 +23,14 @@ feature {NONE} -- Initialization
 		do
 			make_request (http_method, url)
 			create parameters.make (0)
+		ensure
+			parameters_set: parameters.is_empty
 		end
 
 feature -- Access
 
 	parameters: STRING_TABLE [STRING]
+			-- Oauth parameters
 
 	is_valid_key (key: READABLE_STRING_GENERAL): BOOLEAN
 			-- is the key a valid Oauth key parameter?

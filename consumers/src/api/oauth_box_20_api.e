@@ -3,7 +3,8 @@ note
 	author: ""
 	date: "$Date$"
 	revision: "$Revision$"
-	EIS : "name=BOX OAuth api", "src=http://developers.box.com/oauth/", "protocol=uri"
+	EIS: "name=BOX OAuth api", "src=http://developers.box.com/oauth/", "protocol=uri"
+
 class
 	OAUTH_BOX_20_API
 
@@ -16,11 +17,11 @@ inherit
 		end
 
 feature -- Access
-	access_token_verb : READABLE_STRING_GENERAL
+
+	access_token_verb: READABLE_STRING_GENERAL
 		do
 			Result := "POST"
 		end
-
 
 	access_token_extractor: ACCESS_TOKEN_EXTRACTOR
 		do
@@ -48,6 +49,6 @@ feature -- Access
 
 feature -- Implementation
 
-	TEMPLATE_AUTHORIZATION_URL: STRING = "https://www.box.com/api/oauth2/authorize?response_type=code&client_id=$CLIENT_ID&state=authenticated"
+	Template_authorization_url: STRING = "https://www.box.com/api/oauth2/authorize?response_type=code&client_id=$CLIENT_ID&state=authenticated"
 
 end

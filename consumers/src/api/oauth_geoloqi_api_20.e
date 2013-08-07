@@ -3,8 +3,9 @@ note
 	author: ""
 	date: "$Date$"
 	revision: "$Revision$"
-	EIS : "name=Authentication", "src=https://developers.geoloqi.com/api/authentication", "protocol=uri"
-	EIS : "name=OAuth 2.0", "src=https://developers.geoloqi.com/api/OAuth_2.0", "protocol=uri"
+	EIS: "name=Authentication", "src=https://developers.geoloqi.com/api/authentication", "protocol=uri"
+	EIS: "name=OAuth 2.0", "src=https://developers.geoloqi.com/api/OAuth_2.0", "protocol=uri"
+
 class
 	OAUTH_GEOLOQI_API_20
 
@@ -17,11 +18,11 @@ inherit
 		end
 
 feature -- Access
-	access_token_verb : READABLE_STRING_GENERAL
+
+	access_token_verb: READABLE_STRING_GENERAL
 		do
 			Result := "POST"
 		end
-
 
 	access_token_extractor: ACCESS_TOKEN_EXTRACTOR
 		do
@@ -37,15 +38,12 @@ feature -- Access
 	authorization_url (config: OAUTH_CONFIG): detachable READABLE_STRING_GENERAL
 			-- Url where you should redirect your users to authneticate
 		local
-			l_result: STRING_32
 		do
-			--|GEOLOQUI only use POST 	request
+				--|GEOLOQUI only use POST 	request
 		end
 
 feature -- Implementation
 
-	TEMPLATE_AUTHORIZATION_URL: STRING = "https://api.geoloqi.com/1/oauth/token"
+	Template_authorization_url: STRING = "https://api.geoloqi.com/1/oauth/token"
 
 end
-
-

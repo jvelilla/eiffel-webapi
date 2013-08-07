@@ -20,7 +20,7 @@ feature -- Access
 		do
 			create config.make_default (api_key, api_secret)
 			config.set_callback ("http://127.0.0.1")
-			config.set_scope ("https://www.googleapis.com/auth/books")
+			config.set_scope ("https://www.googleapis.com/auth/blogger")
 			create box
 			api_service := box.create_service (config)
 			print ("%N===Google OAuth Workflow ===%N")
@@ -60,9 +60,9 @@ feature -- Access
 
 feature {NONE} -- Implementation
 
-	api_key : STRING ="COMPLETE"
-	api_secret :STRING ="COMPLETE"
-	protected_resource_url : STRING = "https://www.googleapis.com/auth/books"
+	api_key : STRING ="685359177731.apps.googleusercontent.com"
+	api_secret :STRING ="mhfBPVKSSfMVH0noSyfY6MOw"
+	protected_resource_url : STRING = "https://www.googleapis.com/auth/blogger"
  	empty_token : detachable  OAUTH_TOKEN
 
 end

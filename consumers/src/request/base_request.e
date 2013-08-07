@@ -90,9 +90,9 @@ feature -- Access
 
 	verb: READABLE_STRING_GENERAL
 
-	query_string_parameters: PARAMETER_LIST
+	query_string_parameters: OAUTH_PARAMETER_LIST
 
-	body_parameters: PARAMETER_LIST
+	body_parameters: OAUTH_PARAMETER_LIST
 
 	headers: STRING_TABLE [STRING]
 

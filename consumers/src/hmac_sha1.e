@@ -26,8 +26,8 @@ feature {NONE}-- Initialization
 			else
 				reduced_key := reduce_key (key_a)
 			end
-			ipad := (reduced_key.bit_xor_value (create {INTEGER_X}.make_from_hex_string ("36363636363636363636363636363636363636363636363636363636363636363636363636363636363636363636363636363636363636363636363636363636"))).as_fixed_width_byte_array (64)
-			opad := (reduced_key.bit_xor_value (create {INTEGER_X}.make_from_hex_string ("5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c"))).as_fixed_width_byte_array (64)
+			ipad := (reduced_key.bit_xor_value (create {INTEGER_X}.make_from_hex_string ("3636363636363636363636363636363636363636363636363636363636363636"))).as_fixed_width_byte_array (64)
+			opad := (reduced_key.bit_xor_value (create {INTEGER_X}.make_from_hex_string ("5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c"))).as_fixed_width_byte_array (64)
 			create hmac.default_create
 			create message_hash.make
 			feed_inner_mix
@@ -118,5 +118,7 @@ feature {NONE} -- Implementation
 	message_hash: SHA1
 	ipad: SPECIAL [NATURAL_8]
 	opad: SPECIAL [NATURAL_8]
+
+
 
 end

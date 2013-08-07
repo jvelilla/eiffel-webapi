@@ -29,19 +29,17 @@ feature -- Test routines
 			assert ("test_rfc2202_1", hmac.hmac.is_equal (expected))
 		end
 
-
-	test_rfc_4231_1
+	test_rfc2202_prag_imp
 		local
-			hmac: HMAC_SHA256
-			expected: INTEGER_X
+			hmac: SHA1_UTIL
+			res : STRING
 		do
+			create hmac
+			res := hmac.hmac_sha1("key","The quick brown fox jumps over the lazy dog")
+			assert ("Expected", res.is_equal("de7c9b85b8b78aa6bc8a7a36f70a90701c9db4d9"))
 
-			create hmac.make (create {INTEGER_X}.make_from_hex_string ("0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b"))
-			hmac.sink_string ("Hi There")
-			hmac.finish
-			create expected.make_from_hex_string ("b0344c61d8db38535ca8afceaf0bf12b881dc200c9833da726e9376c2e32cff7")
-			assert ("test_rfc_4231_1", hmac.hmac ~ expected)
 		end
+
 
 end
 

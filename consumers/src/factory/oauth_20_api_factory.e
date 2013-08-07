@@ -8,7 +8,8 @@ class
 	OAUTH_20_API_FACTORY
 
 feature -- Foursquare API Factory
-	new_foursquare_api : OAUTH_FOURSQUARE_API_20
+
+	new_foursquare_api: OAUTH_FOURSQUARE_API_20
 		do
 			create Result
 		end

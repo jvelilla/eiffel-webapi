@@ -1,12 +1,11 @@
 note
-	description: "Summary description for {OAUTH_GOOGLE_API_20}."
+	description: "Summary description for {OAUTH_FACEBOOK_API_20}."
 	author: ""
 	date: "$Date$"
 	revision: "$Revision$"
-	EIS: "name:OAuth2 google apis", "src:https://developers.google.com/accounts/docs/OAuth2", "protocol:uri"
 
 class
-	OAUTH_GOOGLE_API_20
+	OAUTH_FACEBOOK_API_20
 
 inherit
 
@@ -31,7 +30,7 @@ feature -- Access
 	access_token_endpoint: READABLE_STRING_GENERAL
 			-- Url that receives the access token request
 		do
-			create {STRING_32} Result.make_from_string ("https://accounts.google.com/o/oauth2/token")
+			create {STRING_32} Result.make_from_string ("https://graph.facebook.com/oauth/access_token")
 		end
 
 	authorization_url (config: OAUTH_CONFIG): detachable READABLE_STRING_GENERAL
@@ -60,7 +59,7 @@ feature -- Access
 
 feature -- Implementation
 
-	Template_authorize_url: STRING = "https://accounts.google.com/o/oauth2/auth?response_type=code&client_id=$CLIENT_ID&redirect_uri=$REDIRECT_URI";
+	Template_authorize_url: STRING = "https://www.facebook.com/dialog/oauth/auth?response_type=code&client_id=$CLIENT_ID&redirect_uri=$REDIRECT_URI";
 
 	Scoped_authorize_url: STRING = "&scope=$SCOPE";
 
