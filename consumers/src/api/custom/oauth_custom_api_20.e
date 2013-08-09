@@ -15,7 +15,7 @@ inherit
 		end
 
 create
-	make
+	make_get, make_post
 
 feature {NONE} -- Initialization
 
@@ -65,7 +65,7 @@ feature -- Access
 
 feature -- Access
 
-	authorization_url_builder: FUNCTION [ANY, TUPLE [OAUTH_CONFIG]: READABLE_STRING_GENERAL]
+	authorization_url_builder: FUNCTION [ANY, TUPLE [OAUTH_CONFIG], READABLE_STRING_GENERAL]
 
 feature {NONE} -- Implementation
 
