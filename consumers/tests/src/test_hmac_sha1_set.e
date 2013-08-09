@@ -35,8 +35,8 @@ feature -- Test routines
 			res : STRING
 		do
 			create hmac
-			res := hmac.hmac_sha1("key","The quick brown fox jumps over the lazy dog")
-			assert ("Expected", res.is_equal("de7c9b85b8b78aa6bc8a7a36f70a90701c9db4d9"))
+			res := hmac.hmac_sha1("","")
+			assert ("Expected", res.is_equal("fbdb1d1b18aa6c08324b7d64b71fb76370690e1d"))
 
 		end
 

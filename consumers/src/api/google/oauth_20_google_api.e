@@ -1,16 +1,16 @@
 note
-	description: "Summary description for {OAUTH_GOOGLE_API_20}."
+	description: "Summary description for {OAUTH_20_GOOGLE_API}."
 	author: ""
 	date: "$Date$"
 	revision: "$Revision$"
 	EIS: "name:OAuth2 google apis", "src:https://developers.google.com/accounts/docs/OAuth2", "protocol:uri"
 
 class
-	OAUTH_GOOGLE_API_20
+	OAUTH_20_GOOGLE_API
 
 inherit
 
-	OAUTH_API_20
+	OAUTH_20_API
 		redefine
 			access_token_extractor,
 			access_token_verb

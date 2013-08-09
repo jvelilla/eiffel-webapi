@@ -1,17 +1,17 @@
 note
-	description: "Summary description for {PAYPAL_OAUTH_API_20_EXAMPLE}."
+	description: "Summary description for {PAYPAL_OAUTH_20_API_EXAMPLE}."
 	author: ""
 	date: "$Date$"
 	revision: "$Revision$"
 
 class
-	PAYPAL_OAUTH_API_20_EXAMPLE
+	PAYPAL_OAUTH_20_API_EXAMPLE
 create
 	make
 feature -- Access	
 	make
 		local
-			box : OAUTH_PAYPAL_API_20
+			box : OAUTH_20_PAYPAL_API
 			config : OAUTH_CONFIG
 			api_service : OAUTH_SERVICE_I
 			request : OAUTH_REQUEST

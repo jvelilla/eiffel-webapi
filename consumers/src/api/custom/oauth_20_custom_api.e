@@ -1,14 +1,14 @@
 note
-	description: "Summary description for {OAUTH_CUSTOM_API_20}."
+	description: "Summary description for {OAUTH_20_CUSTOM_API}."
 	author: ""
 	date: "$Date$"
 	revision: "$Revision$"
 
 class
-	OAUTH_CUSTOM_API_20
+	OAUTH_20_CUSTOM_API
 
 inherit
-	OAUTH_API_20
+	OAUTH_20_API
 		redefine
 			access_token_extractor,
 			access_token_verb

@@ -1,16 +1,16 @@
 note
-	description: "Summary description for {OAUTH_BOX_20_API}."
+	description: "Summary description for {OAUTH_20_BOX_API}."
 	author: ""
 	date: "$Date$"
 	revision: "$Revision$"
 	EIS: "name=BOX OAuth api", "src=http://developers.box.com/oauth/", "protocol=uri"
 
 class
-	OAUTH_BOX_20_API
+	OAUTH_20_BOX_API
 
 inherit
 
-	OAUTH_API_20
+	OAUTH_20_API
 		redefine
 			access_token_extractor,
 			access_token_verb

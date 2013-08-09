@@ -103,7 +103,7 @@ feature {NONE} -- Implementation
 
 	internal_version: STRING = "2.0"
 
-	api: OAUTH_API_20
+	api: OAUTH_20_API
 
 	config: OAUTH_CONFIG
 

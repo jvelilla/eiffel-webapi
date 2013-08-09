@@ -1,5 +1,5 @@
 note
-	description: "Summary description for {OAUTH_GEOLOQI_API_20}."
+	description: "Summary description for {OAUTH_20_GEOLOQI_API}."
 	author: ""
 	date: "$Date$"
 	revision: "$Revision$"
@@ -7,11 +7,11 @@ note
 	EIS: "name=OAuth 2.0", "src=https://developers.geoloqi.com/api/OAuth_2.0", "protocol=uri"
 
 class
-	OAUTH_GEOLOQI_API_20
+	OAUTH_20_GEOLOQI_API
 
 inherit
 
-	OAUTH_API_20
+	OAUTH_20_API
 		redefine
 			access_token_extractor,
 			access_token_verb

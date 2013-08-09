@@ -1,46 +1,43 @@
 note
-	description: "Summary description for {OAUTH_PAYPAL_API_20}."
+	description: "Summary description for {OAUTH_20_API}."
 	author: ""
 	date: "$Date$"
 	revision: "$Revision$"
 
-class
-	OAUTH_PAYPAL_API_20
+deferred class
+	OAUTH_20_API
 
 inherit
 
-	OAUTH_API_20
-		redefine
-			access_token_extractor,
-			access_token_verb
-		end
+	OAUTH_API
 
 feature -- Access
 
 	access_token_extractor: ACCESS_TOKEN_EXTRACTOR
 		do
-			create {JSON_TOKEN_EXTRACTOR} Result
+			create {TOKEN_EXTRACTOR_20} Result
 		end
 
 	access_token_verb: READABLE_STRING_GENERAL
 		do
-			Result := "POST"
+			Result := "GET"
 		end
 
 	access_token_endpoint: READABLE_STRING_GENERAL
 			-- Url that receives the access token request
-		do
-			create {STRING_32} Result.make_from_string (ACCESS_TOKEN_SANDBOX_URL)
+		deferred
 		end
 
 	authorization_url (config: OAUTH_CONFIG): detachable READABLE_STRING_GENERAL
 			-- Url where you should redirect your users to authneticate
-		do
-				--Do nothing
+		deferred
 		end
 
-feature -- Implementation
+feature -- Service
 
-	Access_token_sandbox_url: STRING = "https://api.sandbox.paypal.com/v1/oauth2/token"
+	create_service (config: OAUTH_CONFIG): OAUTH_SERVICE_I
+		do
+			create {OAUTH_20_SERVICE} Result.make (Current, config)
+		end
 
 end

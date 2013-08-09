@@ -1,11 +1,11 @@
 note
-	description: "Summary description for {BOX_API_20_EXAMPLE}."
+	description: "Summary description for {CAMPAING_MONITOR_20_API_EXAMPLE}."
 	author: ""
 	date: "$Date$"
 	revision: "$Revision$"
 
 class
-	BOX_API_20_EXAMPLE
+	CAMPAING_MONITOR_20_API_EXAMPLE
 inherit
 	ARGUMENTS
 
@@ -16,17 +16,18 @@ feature {NONE} -- Initialization
 
 	make
 		local
-			box : OAUTH_BOX_20_API
+			box : OAUTH_20_CAMPAIGN_MONITOR_API
 			config : OAUTH_CONFIG
 			api_service : OAUTH_SERVICE_I
 			request : OAUTH_REQUEST
 			access_token : detachable OAUTH_TOKEN
 		do
 			create config.make_default (api_key, api_secret)
-			config.set_callback ("http://127.0.0.1")
+			config.set_callback ("http://www.eiffelroom.com")
+			config.set_scope ("ManageLists")
 			create box
 			api_service := box.create_service (config)
-			print ("%N=== Bos's OAuth Workflow ===%N")
+			print ("%N===Campaing Monitor OAuth Workflow ===%N")
 
 			-- Obtain the Authorization URL
     		print("%NFetching the Authorization URL...");
@@ -63,11 +64,9 @@ feature {NONE} -- Initialization
 
 feature {NONE} -- Implementation
 
-	api_key : STRING ="xwfpl8mzof5pfab8f7kxral4zgwhvcj2"
-	api_secret :STRING ="IVyaqYZyXuXdEmFe3E4DZOAvNXKA8iQL"
-	protected_resource_url : STRING = "https://www.box.com/api/2.0/folders/0";
+	api_key : STRING ="99248"
+	api_secret :STRING ="3Vd3Aw3LCyu38tW393W333zy0HNc33anDJlM9u3J3fdc3U1B3o333fsA3ufv3aq3u35350UIZ3u3H333"
+	protected_resource_url : STRING = "https://api.createsend.com/api/v3/clients.json?pretty=true";
  	empty_token : detachable  OAUTH_TOKEN
 
 end
-
-

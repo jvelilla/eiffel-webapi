@@ -1,11 +1,11 @@
 note
-	description: "Summary description for {GEOLOQUI_API_20_EXAMPLE}."
+	description: "Summary description for {GEOLOQUI_20_API_EXAMPLE}."
 	author: ""
 	date: "$Date$"
 	revision: "$Revision$"
 
 class
-	GEOLOQUI_API_20_EXAMPLE
+	GEOLOQUI_20_API_EXAMPLE
 inherit
 	ARGUMENTS
 
@@ -16,7 +16,7 @@ feature {NONE} -- Initialization
 
 	make
 		local
-			box : OAUTH_GEOLOQI_API_20
+			box : OAUTH_20_GEOLOQI_API
 			config : OAUTH_CONFIG
 			api_service : OAUTH_SERVICE_I
 			request : OAUTH_REQUEST

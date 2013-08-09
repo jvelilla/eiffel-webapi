@@ -1,15 +1,15 @@
 note
-	description: "Summary description for {OAUTH_FACEBOOK_API_20}."
+	description: "Summary description for {OAUTH_20_FACEBOOK_API}."
 	author: ""
 	date: "$Date$"
 	revision: "$Revision$"
 
 class
-	OAUTH_FACEBOOK_API_20
+	OAUTH_20_FACEBOOK_API
 
 inherit
 
-	OAUTH_API_20
+	OAUTH_20_API
 		redefine
 			access_token_extractor,
 			access_token_verb
