@@ -7,32 +7,20 @@ note
 class
 	TEST_GITHUB_CONSUMER
 
-create
-	make
-
-feature {NONE} -- Initialization
-
-	parameters: TEST_GITHUB_PARAMETERS
-
-	make (p: like parameters)
-			-- Initialize `Current'.
-		require
-			p_valid: p.is_valid
-		do
-			parameters := p
-		end
+inherit
+	TEST_OAUTH_CONSUMER_I
 
 feature -- Execution
 
-	execute
+	test_github
 		local
-			p: like parameters
+			params: TEST_GITHUB_PARAMETERS
 			github: GITHUB
 			tok: detachable READABLE_STRING_8
 		do
-			p := parameters
+			create params
 
-			create github.make (p.username, p.password)
+			create github.make (params.username, params.password)
 
 			github.get_authorizations
 			across
@@ -41,16 +29,16 @@ feature -- Execution
 				print (c.item.debug_output)
 				print ("%N")
 			end
-			tok := p.token
+			tok := params.token
 			if tok = Void then
 				if attached github.new_authorization_token (<<"user", "repo", "public_repo">>) as auth then
 					tok := auth.token
 				end
 			end
 			if tok /= Void then
-				if tok /= p.token then
-					p.set_token (tok)
-					p.save
+				if tok /= params.token then
+					params.set_token (tok)
+					params.save
 				end
 
 				github.set_active_authorization (create {GITHUB_AUTHORIZATION}.make (tok))

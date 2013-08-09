@@ -1,11 +1,11 @@
 note
-	description: "Summary description for {GOOGLE_OAUTH_API_20_EXAMPLE}."
+	description: "Summary description for {GITHUB_OAUTH_API_20_EXAMPLE}."
 	author: ""
 	date: "$Date$"
 	revision: "$Revision$"
 
 class
-	GOOGLE_OAUTH_API_20_EXAMPLE
+	GITHUB_OAUTH_API_20_EXAMPLE
 
 create
 	make
@@ -14,7 +14,7 @@ feature -- Access
 
 	make
 		local
-			box: OAUTH_GOOGLE_API_20
+			box: OAUTH_GITHUB_API_20
 			config: OAUTH_CONFIG
 			api_service: OAUTH_SERVICE_I
 			request: OAUTH_REQUEST
@@ -22,10 +22,10 @@ feature -- Access
 		do
 			create config.make_default (api_key, api_secret)
 			config.set_callback ("http://127.0.0.1")
-			config.set_scope ("https://www.googleapis.com/auth/blogger")
+			config.set_scope ("user,repo,public_repo")
 			create box
 			api_service := box.create_service (config)
-			print ("%N===Google OAuth Workflow ===%N")
+			print ("%N===Github API OAuth Workflow ===%N")
 
 				-- Obtain the Authorization URL
 			print ("%NFetching the Authorization URL...");
@@ -58,9 +58,14 @@ feature -- Access
 
 feature {NONE} -- Implementation
 
-	api_key : STRING ="COMPLETE"
-	api_secret :STRING ="COMPLETE"
-	protected_resource_url : STRING = "https://www.googleapis.com/auth/blogger"
+	api_key: STRING = "COMPLETE"
+
+	api_secret: STRING = "COMPLETE"
+
+	protected_resource_url: STRING = "https://api.github.com/user"
+	protected_resource_url_emails: STRING = "https://api.github.com/user/emails"
+	protected_resource_url_user_repos: STRING = "https://api.github.com/users/jocelyn/repos"
+
 	empty_token: detachable OAUTH_TOKEN
 
 end

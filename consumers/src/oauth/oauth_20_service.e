@@ -23,17 +23,17 @@ feature {NONE} -- Initialization
 		do
 			api := an_api
 			config := a_config
-			version := INTERNAL_VERSION
+			version := internal_version
 		ensure
 			api_set: api = an_api
 			config_set: config = a_config
-			version_set: version = INTERNAL_VERSION
+			version_set: version = internal_version
 		end
 
 feature -- Access
 
-	access_token_get (da_request_token: detachable OAUTH_TOKEN; verifier: OAUTH_VERIFIER): detachable OAUTH_TOKEN
-			-- retrive an access token using a request token
+	access_token_get (a_request_token: detachable OAUTH_TOKEN; a_verifier: OAUTH_VERIFIER): detachable OAUTH_TOKEN
+			-- retrieve an access token using a request token
 			-- (obtained previously)
 		local
 			l_request: OAUTH_REQUEST
@@ -41,7 +41,7 @@ feature -- Access
 			create l_request.make (api.access_token_verb, api.access_token_endpoint)
 			l_request.add_query_string_parameter ({OAUTH_CONSTANTS}.client_id, config.api_key)
 			l_request.add_query_string_parameter ({OAUTH_CONSTANTS}.client_secret, config.api_secret)
-			l_request.add_query_string_parameter ({OAUTH_CONSTANTS}.code, verifier.value)
+			l_request.add_query_string_parameter ({OAUTH_CONSTANTS}.code, a_verifier.value)
 			if attached config.callback as l_callback then
 				l_request.add_query_string_parameter ({OAUTH_CONSTANTS}.redirect_uri, l_callback)
 			end
@@ -55,8 +55,8 @@ feature -- Access
 			end
 		end
 
-	access_token_post (da_request_token: detachable OAUTH_TOKEN; verifier: detachable OAUTH_VERIFIER): detachable OAUTH_TOKEN
-			-- retrive an access token using a request token
+	access_token_post (a_request_token: detachable OAUTH_TOKEN; a_verifier: detachable OAUTH_VERIFIER): detachable OAUTH_TOKEN
+			-- retrieve an access token using a request token
 			-- (obtained previously)
 		local
 			l_request: OAUTH_REQUEST
@@ -69,8 +69,8 @@ feature -- Access
 			end
 			l_request.add_body_parameter ({OAUTH_CONSTANTS}.client_id, config.api_key)
 			l_request.add_body_parameter ({OAUTH_CONSTANTS}.client_secret, config.api_secret)
-			if attached verifier as l_verifier then
-				l_request.add_body_parameter ({OAUTH_CONSTANTS}.code, l_verifier.value)
+			if a_verifier /= Void then
+				l_request.add_body_parameter ({OAUTH_CONSTANTS}.code, a_verifier.value)
 			end
 			if attached config.callback as l_callback then
 				l_request.add_body_parameter ({OAUTH_CONSTANTS}.redirect_uri, l_callback)
@@ -85,10 +85,10 @@ feature -- Access
 			end
 		end
 
-	sign_request (an_access_token: OAUTH_TOKEN; a_req: OAUTH_REQUEST)
+	sign_request (a_access_token: OAUTH_TOKEN; a_req: OAUTH_REQUEST)
 			-- Signs an OAuth request using an access token (obtained previously)
 		do
-			a_req.add_query_string_parameter ({OAUTH_CONSTANTS}.access_token, an_access_token.token)
+			a_req.add_query_string_parameter ({OAUTH_CONSTANTS}.access_token, a_access_token.token)
 		end
 
 	authorization_url (a_request_token: detachable OAUTH_TOKEN): detachable READABLE_STRING_GENERAL
@@ -101,7 +101,7 @@ feature -- Access
 
 feature {NONE} -- Implementation
 
-	INTERNAL_VERSION: STRING = "2.0"
+	internal_version: STRING = "2.0"
 
 	api: OAUTH_API_20
 
@@ -110,7 +110,7 @@ feature {NONE} -- Implementation
 	request_token: detachable OAUTH_TOKEN
 			-- retrieve the request token
 		do
-				-- "Unsupported operation, please use 'getAuthorizationUrl' and redirect your users there"
+			-- "Unsupported operation, please use 'getAuthorizationUrl' and redirect your users there"
 		end
 
 end

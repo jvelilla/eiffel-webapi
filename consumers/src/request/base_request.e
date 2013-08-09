@@ -8,7 +8,6 @@ class
 	BASE_REQUEST
 
 inherit
-
 	HTTP_CONSTANTS
 
 create
@@ -19,7 +18,7 @@ feature {NONE} -- Initialization
 	make (a_method: READABLE_STRING_GENERAL; a_uri: READABLE_STRING_GENERAL)
 		require
 			valid_http_method: is_http_method (a_method)
-			valid_uri : is_valid_uri (a_uri)
+			valid_uri: is_valid_uri (a_uri)
 		do
 			verb := a_method
 			uri := a_uri
@@ -34,17 +33,17 @@ feature {NONE} -- Initialization
 
 feature -- Status Report
 
-	is_valid_uri (a_uri : READABLE_STRING_GENERAL) : BOOLEAN
+	is_valid_uri (a_uri: READABLE_STRING_GENERAL): BOOLEAN
 		local
-			l_uri : URI
+			l_uri: URI
 		do
 			create l_uri.make_from_string (a_uri.as_string_8)
 			Result := l_uri.is_valid
 		end
 
-	query_string : detachable READABLE_STRING_GENERAL
+	query_string: detachable READABLE_STRING_GENERAL
 		local
-			l_uri : URI
+			l_uri: URI
 		do
 			create l_uri.make_from_string (uri.as_string_8)
 			Result := l_uri.query
@@ -75,11 +74,9 @@ feature -- Status Report
 
 feature -- Constants
 
-	CONTENT_LENGTH: STRING_32 = "Content-Length";
+	content_type_header_name: STRING_32 = "Content-Type";
 
-	CONTENT_TYPE: STRING_32 = "Content-Type";
-
-	DEFAULT_CONTENT_TYPE: STRING
+	default_content_type: STRING
 		once
 			Result := application_x_www_form_encoded
 		end
@@ -98,37 +95,38 @@ feature -- Access
 
 	payload: detachable STRING
 
-	executor : detachable REQUEST_EXECUTOR
+	executor: detachable REQUEST_EXECUTOR
 
 feature -- Change Element
-	add_body_parameter (a_key : READABLE_STRING_GENERAL; a_value : READABLE_STRING_GENERAL)
+
+	add_body_parameter (a_key: READABLE_STRING_GENERAL; a_value: READABLE_STRING_GENERAL)
 		do
 			body_parameters.add_parameter (a_key.as_string_32, a_value.as_string_32)
 		end
 
-	add_payload (a_payload : like payload)
+	add_payload (a_payload: like payload)
 		do
 			payload := a_payload
 		ensure
-			payload_set : attached payload as l_payload implies l_payload = a_payload
+			payload_set: attached payload as l_payload implies l_payload = a_payload
 		end
 
-
-	add_query_string_parameter ( key : READABLE_STRING_GENERAL; value : READABLE_STRING_GENERAL)
+	add_query_string_parameter (key: READABLE_STRING_GENERAL; value: READABLE_STRING_GENERAL)
 			-- Add a query string parameter
 		do
 			query_string_parameters.add_parameter (key.as_string_8, value.as_string_8)
 		ensure
-			one_more_parameter : old query_string_parameters.count + 1 = query_string_parameters.count
+			one_more_parameter: old query_string_parameters.count + 1 = query_string_parameters.count
 		end
 
-	add_header ( key : READABLE_STRING_GENERAL; value : READABLE_STRING_GENERAL)
+	add_header (key: READABLE_STRING_GENERAL; value: READABLE_STRING_GENERAL)
 		do
 			headers.force (value.as_string_32, key)
 		end
 
 feature -- Execute
-	execute : detachable OAUTH_RESPONSE
+
+	execute: detachable OAUTH_RESPONSE
 		do
 			initialize_executor
 			Result := do_execute
@@ -136,20 +134,21 @@ feature -- Execute
 
 	initialize_executor
 		do
-			create executor.make (query_string_parameters.append_to (uri).as_string_32,verb)
+			create executor.make (query_string_parameters.append_to (uri).as_string_32, verb)
 		end
 
 feature {NONE} -- Implementation
-	do_execute : detachable OAUTH_RESPONSE
+
+	do_execute: detachable OAUTH_RESPONSE
 		do
 			if attached executor as l_executor then
-				-- add headers
+					-- add headers
 				add_headers (l_executor)
 				if verb.same_string (method_put) or else verb.same_string (method_post) then
 					l_executor.set_body (body_contents.as_string_8)
 				end
-				if not l_executor.context_executor.headers.has (content_type) then
-					l_executor.context_executor.add_header (content_type, default_content_type)
+				if not l_executor.context_executor.headers.has (content_type_header_name) then
+					l_executor.context_executor.add_header (content_type_header_name, default_content_type)
 				end
 				if attached l_executor.execute as l_response then
 					create Result.make (l_response)
@@ -157,21 +156,21 @@ feature {NONE} -- Implementation
 			end
 		end
 
-
 feature {NONE} -- Implementation
-	add_headers (a_executor : REQUEST_EXECUTOR)
+
+	add_headers (a_executor: REQUEST_EXECUTOR)
 		do
-				from headers.start
-				until
-					headers.after
-				loop
-					a_executor.context_executor.add_header (headers.key_for_iteration.as_string_32,headers.item_for_iteration.as_string_32)
-					headers.forth
-				end
+			from
+				headers.start
+			until
+				headers.after
+			loop
+				a_executor.context_executor.add_header (headers.key_for_iteration.as_string_32, headers.item_for_iteration.as_string_32)
+				headers.forth
+			end
 		end
 
-
-	body_contents : READABLE_STRING_GENERAL
+	body_contents: READABLE_STRING_GENERAL
 		do
 			if attached payload as l_payload then
 				Result := l_payload

@@ -7,6 +7,9 @@ note
 class
 	APPLICATION
 
+inherit
+	ARGUMENTS
+
 create
 	make
 
@@ -17,9 +20,23 @@ feature {NONE} -- Initialization
 		do
 			prepare
 
-			test_github
-			test_google
---			test_twitter -- NOT WORKING
+			if argument_count > 0 then
+				across
+					argument_array as c
+				loop
+					if c.item.same_string ("github") then
+						test_github
+					elseif c.item.same_string ("google") then
+						test_google
+					elseif c.item.same_string ("twitter") then
+						test_twitter
+					end
+				end
+			else
+				test_github
+				test_google
+	--			test_twitter -- NOT WORKING
+			end
 		end
 
 	prepare
@@ -37,12 +54,12 @@ feature {NONE} -- Initialization
 
 	test_github
 		local
-			p: TEST_GITHUB_PARAMETERS
+--			p: TEST_GITHUB_PARAMETERS
 			t: TEST_GITHUB_CONSUMER
 		do
-			create p
-			create t.make (p)
-			t.execute
+			create t
+			t.prepare_data
+			t.test_github
 		end
 
 	test_twitter

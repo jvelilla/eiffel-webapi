@@ -2,15 +2,6 @@ note
 	description: "[
 			Summary description for {GITHUB}.
 
---			get_url ("/user")
---			get_url ("/user/repos")
---			get_url ("/user/repos?page=1&per_page=3")
-
---			get_url ("/")
---			get_url ("/gists")
-			post_url ("/gists", "{%"description%": %"Testing Eiffel, OAuth and Gist.github.com%", %"public%": true, %"files%": {%"test.txt%": {%"content%": %"This is a test%"}}}")
---			get_url ("/gists/59504")
-
 		]"
 	author: ""
 	date: "$Date$"
