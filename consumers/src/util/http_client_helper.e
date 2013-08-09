@@ -26,11 +26,15 @@ feature -- Access
 			if attached {HTTP_CLIENT_SESSION} h.new_session (base_url) as sess then
 				http_session := sess
 				sess.set_timeout (-1)
-				sess.set_is_debug (True)
 				sess.set_connect_timeout (-1)
 				sess.set_is_insecure (True)
 				sess.set_any_auth_type
-					--				sess.set_proxy ("127.0.0.1", 8888) --| inspect traffic with http://www.fiddler2.com/
+				debug ("curl")
+					sess.set_is_debug (True)
+				end
+				debug ("proxy8888")
+					sess.set_proxy ("127.0.0.1", 8888) --| inspect traffic with http://www.fiddler2.com/					
+				end
 			end
 		end
 

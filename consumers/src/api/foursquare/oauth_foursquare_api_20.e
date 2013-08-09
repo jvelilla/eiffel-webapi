@@ -9,7 +9,6 @@ class
 	OAUTH_FOURSQUARE_API_20
 
 inherit
-
 	OAUTH_API_20
 		redefine
 			access_token_extractor

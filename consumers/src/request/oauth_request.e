@@ -8,7 +8,6 @@ class
 	OAUTH_REQUEST
 
 inherit
-
 	BASE_REQUEST
 		rename
 			make as make_request
@@ -33,12 +32,12 @@ feature -- Access
 			-- Oauth parameters
 
 	is_valid_key (key: READABLE_STRING_GENERAL): BOOLEAN
-			-- is the key a valid Oauth key parameter?
+			-- is the key a valid OAuth key parameter?
 		do
 			if key.starts_with (oauth_prefix) or else key.same_string (({OAUTH_CONSTANTS}.scope)) then
 				Result := True
 			else
-					--OAuth parameters must start with `oauht' or it should be `scope'
+					--OAuth parameters must start with `oauth' or it should be `scope'
 					--| we need logging or report this as an ERROR
 			end
 		end
