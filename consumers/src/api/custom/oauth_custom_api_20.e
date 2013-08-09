@@ -19,20 +19,21 @@ create
 
 feature {NONE} -- Initialization
 
-	make_get (a_authorization_url_builder: like authorization_url_builder)
+	make_get (a_authorization_url_builder: like authorization_url_builder; a_end_point: like access_token_endpoint)
 		do
-			initialize (a_authorization_url_builder)
 			internal_access_token_verb := "GET"
+			initialize (a_authorization_url_builder, a_end_point)
 		end
 
-	make_post (a_authorization_url_builder: like authorization_url_builder)
+	make_post (a_authorization_url_builder: like authorization_url_builder; a_end_point: like access_token_endpoint)
 		do
-			initialize (a_authorization_url_builder)
 			internal_access_token_verb := "POST"
+			initialize (a_authorization_url_builder, a_end_point)
 		end
 
-	initialize (a_authorization_url_builder: like authorization_url_builder)
+	initialize (a_authorization_url_builder: like authorization_url_builder; a_end_point: like access_token_endpoint)
 		do
+			internal_access_token_endpoint := a_end_point
 			create {TOKEN_EXTRACTOR_20} internal_access_token_extractor
 			authorization_url_builder := a_authorization_url_builder
 		end
@@ -57,8 +58,6 @@ feature -- Access
 
 	authorization_url (config: OAUTH_CONFIG): detachable READABLE_STRING_GENERAL
 			-- Url where you should redirect your users to authneticate
-		local
-			l_result: STRING_32
 		do
 			Result := authorization_url_builder.item ([config])
 		end
