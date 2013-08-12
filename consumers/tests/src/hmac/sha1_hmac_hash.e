@@ -9,7 +9,7 @@ class
 
 inherit
 	HMAC_HASH
-
+	ARRAY_FACILITIES
 feature -- Access
 
 	hash (t: STRING): STRING
@@ -22,6 +22,5 @@ feature -- Access
 			Result.remove_head (2)
 			Result.to_lower
 		end
-
 
 end

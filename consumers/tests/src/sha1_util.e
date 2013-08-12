@@ -8,7 +8,6 @@ class
 	SHA1_UTIL
 
 inherit
-
 	ARRAY_FACILITIES
 
 feature

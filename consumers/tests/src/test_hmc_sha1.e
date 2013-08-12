@@ -1,21 +1,20 @@
 note
-	description: "Summary description for {HMAC_SHA1}."
+	description: "Summary description for {TEST_HMC_SHA1}."
 	author: ""
 	date: "$Date$"
 	revision: "$Revision$"
-	EIS: "name=HMAC-Generic","src=https://en.wikipedia.org/wiki/Hash-based_message_authentication_code","protocol=uri"
+
 class
-	HMAC_SHA1
-
+	TEST_HMC_SHA1
 inherit
-
 	BYTE_FACILITIES
 
 create
+
 	make,
 	make_ascii_key
 
-feature {NONE}-- Initialization
+feature {NONE}
 
 	make (key_a: READABLE_INTEGER_X)
 		local
@@ -33,8 +32,7 @@ feature {NONE}-- Initialization
 			feed_inner_mix
 		end
 
-
-	make_ascii_key ( key_a: READABLE_STRING_8)
+	make_ascii_key (key_a: READABLE_STRING_8)
 		local
 			key_bytes: SPECIAL [NATURAL_8]
 			i: INTEGER
@@ -51,22 +49,23 @@ feature {NONE}-- Initialization
 			make (create {INTEGER_X}.make_from_bytes (key_bytes, 0, key_bytes.count - 1))
 		end
 
-feature -- Access
+feature
+
 	finish
 		local
 			hash_inner: SPECIAL [NATURAL_8]
 			hash_outer: SPECIAL [NATURAL_8]
 			hmac_hash: SHA1
 		do
-			create hash_inner.make_filled (0, 20)
+			create hash_inner.make_filled (0, 32)
 			message_hash.do_final (hash_inner, 0)
 			create hmac_hash.make
 			hmac_hash.sink_special_lsb (opad, 0, 63)
-			hmac_hash.sink_special_lsb (hash_inner, 0, 19)
-			create hash_outer.make_filled (0, 20)
+			hmac_hash.sink_special_lsb (hash_inner, 0, 31)
+			create hash_outer.make_filled (0, 32)
 			hmac_hash.do_final (hash_outer, 0)
-			create hmac.make_from_bytes (hash_outer, 0, 19)
-         	finished := True
+			create hmac.make_from_bytes (hash_outer, 0, 31)
+			finished := True
 		ensure
 			finished
 		end
@@ -74,8 +73,20 @@ feature -- Access
 	finished: BOOLEAN
 
 	hmac: INTEGER_X
+--		require
+--			finished
+--		attribute
+--		end
 
-feature {NONE} -- Implementation
+	reset
+		do
+			message_hash.reset
+			finished := False
+		ensure
+			not finished
+		end
+
+feature {NONE}
 
 	reduce_key (key_a: READABLE_INTEGER_X): INTEGER_X
 		require
@@ -106,7 +117,7 @@ feature {NONE} -- Implementation
 
 	feed_inner_mix
 		do
-			sink_special_lsb (ipad, 0, 63)
+			sink_special_lsb (ipad, 0, 40)
 		end
 
 	byte_sink (in: NATURAL_8)
@@ -114,11 +125,7 @@ feature {NONE} -- Implementation
 			message_hash.update (in)
 		end
 
-
 	message_hash: SHA1
 	ipad: SPECIAL [NATURAL_8]
 	opad: SPECIAL [NATURAL_8]
-
-
-
 end
