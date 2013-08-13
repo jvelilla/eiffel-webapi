@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<system xmlns="http://www.eiffel.com/developers/xml/configuration-1-11-0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.eiffel.com/developers/xml/configuration-1-11-0 http://www.eiffel.com/developers/xml/configuration-1-11-0.xsd" name="tests" uuid="FE368136-51DC-4A67-B657-B26A93F0EE6D">
-	<target name="tests">
+<system xmlns="http://www.eiffel.com/developers/xml/configuration-1-11-0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.eiffel.com/developers/xml/configuration-1-11-0 http://www.eiffel.com/developers/xml/configuration-1-11-0.xsd" name="consumer-tests" uuid="FE368136-51DC-4A67-B657-B26A93F0EE6D">
+	<target name="consumer-tests">
 		<root class="APPLICATION" feature="make"/>
 		<file_rule>
 			<exclude>/.git$</exclude>
@@ -23,6 +23,6 @@
 		<library name="uri" location="$ISE_LIBRARY\library\text\uri\uri-safe.ecf" readonly="false"/>
 		<library name="xml_parser" location="$ISE_LIBRARY\library\text\parser\xml\parser\xml_parser-safe.ecf"/>
 		<library name="xml_tree" location="$ISE_LIBRARY\library\text\parser\xml\tree\xml_tree-safe.ecf" readonly="false"/>
-		<cluster name="tests" location=".\src\" recursive="true"/>
+		<cluster name="consumer-tests" location=".\src\" recursive="true"/>
 	</target>
 </system>
