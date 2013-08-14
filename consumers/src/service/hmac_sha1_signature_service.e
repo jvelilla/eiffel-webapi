@@ -50,14 +50,13 @@ feature {NONE} --Implementation
 		local
 			l_hmac_sha1: HMAC_SHA1
 			str : STRING
+			utf : UTF_CONVERTER
 		do
 			create l_hmac_sha1.make_ascii_key (key.as_string_8)
 			l_hmac_sha1.sink_string (to_sing.as_string_8)
 			l_hmac_sha1.finish
-			print (bytes_to_string (l_hmac_sha1.hmac.as_bytes))
-			str := l_hmac_sha1.hmac.out_decimal
-			str.remove_head (2)
-			Result := (create{SHARED_BASE64}).base64_encoder.encoded_string(str)
+			create utf
+			Result := bytes_to_string (utf.utf_32_string_to_utf_8 (l_hmac_sha1.hmac.debug_output))
 			Result.replace_substring_all (Carriage_return, Empty_string)
 		end
 
@@ -67,15 +66,11 @@ feature {NONE} --Implementation
 			l_encoder: UTF8_ENCODER
 		do
 			create Result.make_empty
-			from
-			  i := 0
-			until
-				i >= a_bytes.count
-			loop
-				Result.append_character(to_byte(a_bytes.at (i).as_integer_8).to_character_8)
-				i:= i + 1
-			end
 			create l_encoder
+			across a_bytes as c
+				loop
+   					Result.append_code (c.item)
+				end
 			Result := (create{SHARED_BASE64}).base64_encoder.encoded_string(l_encoder.encoded_string (Result))
 		end
 

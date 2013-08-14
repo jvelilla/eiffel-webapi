@@ -9,10 +9,9 @@ class
 inherit
 
 	OAUTH_SERVICE_I
-		export
-			{NONE} request_token
+		export {NONE}
+			access_token_post
 		end
-
 create
 	make
 
@@ -31,22 +30,17 @@ feature {NONE} -- Initialization
 
 feature -- Access
 
-	access_token_get (a_request_token: detachable OAUTH_TOKEN; a_verifier: OAUTH_VERIFIER): detachable OAUTH_TOKEN
-			-- retrieve an access token using a request token
-			-- (obtained previously)
+	request_token: detachable OAUTH_TOKEN
+			-- retrieve the request token
 		local
 			l_request: OAUTH_REQUEST
 		do
-			create l_request.make (api.access_token_verb, api.access_token_endpoint)
-			l_request.add_query_string_parameter ({OAUTH_CONSTANTS}.client_id, config.api_key)
-			l_request.add_query_string_parameter ({OAUTH_CONSTANTS}.client_secret, config.api_secret)
-			l_request.add_query_string_parameter ({OAUTH_CONSTANTS}.code, a_verifier.value)
+			create l_request.make (api.request_token_verb, api.request_token_endpoint)
 			if attached config.callback as l_callback then
-				l_request.add_query_string_parameter ({OAUTH_CONSTANTS}.redirect_uri, l_callback)
+				l_request.add_parameter ({OAUTH_CONSTANTS}.callback, l_callback)
 			end
-			if config.has_scope and then attached config.scope as l_scope then
-				l_request.add_query_string_parameter ({OAUTH_CONSTANTS}.scope, l_scope)
-			end
+			set_oauth_params (l_request, (create {OAUTH_CONSTANTS}).empty_token)
+			append_signature (l_request)
 			if attached l_request.execute as l_response then
 				if attached l_response.body as l_body then
 					Result := api.access_token_extractor.extract (l_body)
@@ -54,35 +48,27 @@ feature -- Access
 			end
 		end
 
-	access_token_post (a_request_token: detachable OAUTH_TOKEN; a_verifier: detachable OAUTH_VERIFIER): detachable OAUTH_TOKEN
+
+	access_token_get (a_request_token: detachable OAUTH_TOKEN; a_verifier: OAUTH_VERIFIER): detachable OAUTH_TOKEN
 			-- retrieve an access token using a request token
 			-- (obtained previously)
 		local
 			l_request: OAUTH_REQUEST
 		do
 			create l_request.make (api.access_token_verb, api.access_token_endpoint)
-			if attached config.grant_type as l_grant_type then
-				l_request.add_body_parameter ({OAUTH_CONSTANTS}.grant_type, l_grant_type)
-			else
-				l_request.add_body_parameter ({OAUTH_CONSTANTS}.grant_type, {OAUTH_CONSTANTS}.authorization_code)
-			end
-			l_request.add_body_parameter ({OAUTH_CONSTANTS}.client_id, config.api_key)
-			l_request.add_body_parameter ({OAUTH_CONSTANTS}.client_secret, config.api_secret)
-			if a_verifier /= Void then
-				l_request.add_body_parameter ({OAUTH_CONSTANTS}.code, a_verifier.value)
-			end
-			if attached config.callback as l_callback then
-				l_request.add_body_parameter ({OAUTH_CONSTANTS}.redirect_uri, l_callback)
-			end
-			if config.has_scope and then attached config.scope as l_scope then
-				l_request.add_body_parameter ({OAUTH_CONSTANTS}.scope, l_scope)
-			end
-			if attached l_request.execute as l_response then
-				if attached l_response.body as l_body then
-					Result := api.access_token_extractor.extract (l_body)
+			if  a_request_token /= Void then
+				l_request.add_parameter ({OAUTH_CONSTANTS}.token, a_request_token.token)
+				l_request.add_parameter ({OAUTH_CONSTANTS}.verifier, a_verifier.value)
+				set_oauth_params (l_request, a_request_token)
+				append_signature (l_request)
+				if attached l_request.execute as l_response then
+					if attached l_response.body as l_body then
+						Result := api.access_token_extractor.extract (l_body)
+					end
 				end
 			end
 		end
+
 
 	sign_request (a_access_token: OAUTH_TOKEN; a_req: OAUTH_REQUEST)
 			-- Signs an OAuth request using an access token (obtained previously)
@@ -106,9 +92,57 @@ feature {NONE} -- Implementation
 
 	config: OAUTH_CONFIG
 
-	request_token: detachable OAUTH_TOKEN
-			-- retrieve the request token
+
+	signature (request: OAUTH_REQUEST; token: OAUTH_TOKEN): STRING
+			-- Generate OAuth request signature
+		local
+			base_string: STRING
+			l_signature: STRING
 		do
-			-- "Unsupported operation, please use 'getAuthorizationUrl' and redirect your users there"
+			base_string := api.base_string_extractor.extract (request)
+			l_signature:= api.signature_service.signature (base_string, config.api_secret, token.secret)
+			Result := l_signature
+		end
+
+	set_oauth_params (a_request: OAUTH_REQUEST; a_token: OAUTH_TOKEN)
+		do
+			a_request.add_parameter ({OAUTH_CONSTANTS}.timestamp, api.timestamp_service.timestamp_in_seconds)
+			a_request.add_parameter ({OAUTH_CONSTANTS}.nonce, api.timestamp_service.nonce)
+			a_request.add_parameter ({OAUTH_CONSTANTS}.consumer_key,config.api_key)
+			a_request.add_parameter ({OAUTH_CONSTANTS}.sign_method,api.signature_service.signature_method)
+			a_request.add_parameter ({OAUTH_CONSTANTS}.version,version)
+
+			if config.has_scope and then attached config.scope as l_scope then
+				a_request.add_parameter ({OAUTH_CONSTANTS}.scope, l_scope)
+			end
+			a_request.add_parameter ({OAUTH_CONSTANTS}.signature, signature (a_request, a_token))
+		end
+
+	append_signature (a_request: OAUTH_REQUEST)
+		local
+			l_oauth_header: STRING
+		do
+			if attached config.signature_type as l_signature then
+				if l_signature.is_header then
+					l_oauth_header := api.header_extractor.extract (a_request).as_string_8
+					a_request.add_header ({OAUTH_CONSTANTS}.header, l_oauth_header)
+				elseif l_signature.is_query_string then
+					from
+						a_request.outh_parameters.start
+					until
+						a_request.outh_parameters.after
+					loop
+						a_request.add_query_string_parameter (a_request.outh_parameters.key_for_iteration, a_request.outh_parameters.item_for_iteration)
+						a_request.outh_parameters.forth
+					end
+				end
+			end
+		end
+
+	access_token_post (a_request_token: detachable OAUTH_TOKEN; a_verifier: detachable OAUTH_VERIFIER): detachable OAUTH_TOKEN
+			-- retrieve an access token using a request token
+			-- (obtained previously)
+		do
+			--|Not implemented
 		end
 end

@@ -54,11 +54,15 @@ feature {NONE} -- Implementation
 			-- Random integer
 			-- Each call returns another random number.
 		do
-			random_sequence.forth
-			Result := random_sequence.item
+			if attached random_sequence as l_random_sequence then
+				l_random_sequence.forth
+				Result := l_random_sequence.item
+			else
+				Result := 27
+			end
 		end
 
-	random_sequence: RANDOM
+	random_sequence: detachable RANDOM
 			-- Random sequence
 
 end
