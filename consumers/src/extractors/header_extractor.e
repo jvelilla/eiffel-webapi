@@ -9,7 +9,7 @@ deferred class
 
 feature -- Extractor
 
-	extract (request: OAUTH_REQUEST): detachable READABLE_STRING_GENERAL
+	extract (request: OAUTH_REQUEST): READABLE_STRING_GENERAL
 			-- Generates an OAuth 'Authorization' Http header to include in requests as the signature.
 		deferred
 		end

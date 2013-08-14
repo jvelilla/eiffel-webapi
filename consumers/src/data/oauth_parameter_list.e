@@ -29,6 +29,8 @@ feature {NONE} -- Initialization
 			parameters := a_params
 		end
 
+feature {OAUTH_PARAMETER_LIST}
+
 	parameters: LIST [OAUTH_PARAMETER]
 
 feature -- Add: parameter
@@ -41,6 +43,14 @@ feature -- Add: parameter
 			parameters.force (l_param)
 		ensure
 			one_more_element: old parameters.count + 1 = parameters.count
+		end
+
+	add_all (a_params : OAUTH_PARAMETER_LIST)
+			-- Add all parameters from `a_params' to `Current'
+		do
+			across a_params.parameters as elem loop parameters.force (elem.item) end
+		ensure
+			-- Added_parameters: old parameters + a_params.parameters = parameters
 		end
 
 feature -- Access

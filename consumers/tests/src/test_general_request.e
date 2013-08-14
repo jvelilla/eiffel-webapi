@@ -41,6 +41,16 @@ feature -- Tests
 
 		end
 
+	test_url_sanitize
+		local
+			l_uri : URI
+		do
+			create l_uri.make_from_string ("http://example.com/?qsparam=value&other+param=value+with+spaces")
+			print (l_uri.debug_output)
+			l_uri.remove_query
+			print (l_uri.debug_output)
+			
+		end
 
 	get_query_string_parameters
 		do

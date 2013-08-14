@@ -49,16 +49,16 @@ feature -- Status Report
 			Result := l_uri.query
 		end
 
-	sanitized_url : detachable STRING_32
-			-- Returns the URL without the port and the query string part	
+	sanitized_url: STRING_32
+			-- Returns the URL without the query string part	
 		local
 			l_uri: URI
 		do
-			if attached query_string then
-
-			end
-			Result := uri.as_string_32.twin
 			create l_uri.make_from_string (uri.as_string_8)
+			l_uri.remove_query
+			Result := l_uri.debug_output
+		ensure
+			sanitized: not as_uri (Result).has_query
 		end
 
 	is_http_method (a_method: READABLE_STRING_GENERAL): BOOLEAN
@@ -196,6 +196,13 @@ feature {NONE} -- Implementation
 			if attached query_string as l_query then
 				query_string_parameters.add_query_string (l_query)
 			end
+		end
+
+	as_uri (a_string: READABLE_STRING_GENERAL) : URI
+		require
+			is_valid_uri : is_valid_uri (a_string)
+		do
+			create Result.make_from_string (a_string.as_string_8)
 		end
 
 end

@@ -21,15 +21,15 @@ feature {NONE} -- Initialization
 	make (http_method: READABLE_STRING_GENERAL; url: READABLE_STRING_GENERAL)
 		do
 			make_request (http_method, url)
-			create parameters.make (0)
+			create outh_parameters.make (0)
 		ensure
-			parameters_set: parameters.is_empty
+			parameters_set: outh_parameters.is_empty
 		end
 
 feature -- Access
 
-	parameters: STRING_TABLE [STRING]
-			-- Oauth parameters
+	outh_parameters: STRING_TABLE [STRING]
+			-- Oauth outh_parameters
 
 	is_valid_key (key: READABLE_STRING_GENERAL): BOOLEAN
 			-- is the key a valid OAuth key parameter?
@@ -37,7 +37,7 @@ feature -- Access
 			if key.starts_with (oauth_prefix) or else key.same_string (({OAUTH_CONSTANTS}.scope)) then
 				Result := True
 			else
-					--OAuth parameters must start with `oauth' or it should be `scope'
+					--OAuth outh_parameters must start with `oauth' or it should be `scope'
 					--| we need logging or report this as an ERROR
 			end
 		end
@@ -49,9 +49,9 @@ feature -- Add Parameters
 		require
 			-- valid_key
 		do
-			parameters.force (value.as_string_32, key)
+			outh_parameters.force (value.as_string_32, key)
 		ensure
-			parameter_added: parameters.has (key)
+			parameter_added: outh_parameters.has (key)
 		end
 
 feature {NONE} -- Implementation
