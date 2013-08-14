@@ -18,17 +18,10 @@ feature -- Tests
 		local
 			l_service : HMAC_SHA1_SIGNATURE_SERVICE
 			l_expected: STRING
-			l_integer : INTEGER_X
-			l_sha1: SHA1_UTIL
 		do
-			l_expected := "NzNjYWM3MmUyZTY0ODRjZTJjYTFkY2ZlNmVjODJlNDEzYjJhNmNkOQ=="
-			create l_sha1
-			print (l_sha1.bytestring (l_sha1.build_bytes ("NzNjYWM3MmUyZTY0ODRjZTJjYTFkY2ZlNmVjODJlNDEzYjJhNmNkOQ==")))
-
-
-
+			l_expected := "uGymw2KHOTWI699YEaoi5xyLT50"
 			create l_service
-			assert("Expected:NzNjYWM3MmUyZTY0ODRjZTJjYTFkY2ZlNmVjODJlNDEzYjJhNmNkOQ==", l_service.signature ("api secret", "token secret", "base string").is_equal (l_expected))
+			assert("Expected:uGymw2KHOTWI699YEaoi5xyLT50==", l_service.signature ("api secret", "token secret", "base string").is_equal (l_expected))
 		end
 
 
