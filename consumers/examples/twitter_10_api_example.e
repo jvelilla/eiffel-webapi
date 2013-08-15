@@ -20,13 +20,13 @@ feature {NONE} -- Initialization
 			request : OAUTH_REQUEST
 			access_token,request_token : detachable OAUTH_TOKEN
 			signature: OAUTH_SIGNATURE_TYPE
+			api_builder: API_BUILDER
 		do
-			create signature.make
-			create config.make_default (api_key, api_secret)
-			config.set_callback ("oob")
-			config.set_signature_type (signature)
-			create box
-			api_service := box.create_service (config)
+			create api_builder
+			api_service := api_builder.with_api (create {OAUTH_10_TWITTER_API})
+												.with_api_key (api_key)
+												.with_api_secret (api_secret)
+												.build
 			print ("%N===Twitter OAuth Workflow ===%N")
 
 		 	-- Obtain the Request Token
