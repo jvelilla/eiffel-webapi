@@ -51,7 +51,7 @@ feature -- Access
 
 feature {NONE} -- Implementation
 
-	Token_definition: STRING = "access_token="
+	Token_definition: STRING = "oauth_token="
 
 	Secret_token_definition: STRING = "oauth_token_secret="
 

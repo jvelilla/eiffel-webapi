@@ -29,7 +29,7 @@ feature -- Access
 		do
 			initialize_random
 			create l_nonce
-			Result := l_nonce.new_nonce (new_random)
+			Result := l_nonce.new_nonce (42)
 		end
 
 

@@ -81,7 +81,7 @@ feature -- Access
 			-- your application.
 			-- a request token needed to authorize
 		do
-			Result := api.authorization_url (config)
+			Result := api.authorization_url (a_request_token)
 		end
 
 feature {NONE} -- Implementation

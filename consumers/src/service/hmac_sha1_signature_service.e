@@ -49,29 +49,29 @@ feature {NONE} --Implementation
 	do_sign (to_sing: READABLE_STRING_GENERAL; key: READABLE_STRING_GENERAL): STRING
 		local
 			l_hmac_sha1: HMAC_SHA1
-			str : STRING
-			utf : UTF_CONVERTER
 		do
 			create l_hmac_sha1.make_ascii_key (key.as_string_8)
 			l_hmac_sha1.sink_string (to_sing.as_string_8)
 			l_hmac_sha1.finish
-			create utf
-			Result := bytes_to_string (utf.utf_32_string_to_utf_8 (l_hmac_sha1.hmac.debug_output))
+			Result := encode_base_64(byte_array (l_hmac_sha1.hmac.as_bytes))
 			Result.replace_substring_all (Carriage_return, Empty_string)
 		end
 
-	bytes_to_string (a_bytes: SPECIAL[NATURAL_8]) : STRING
+
+
+feature {NONE} -- Encoding Byte Array Implementation		
+
+	byte_array (a_bytes: SPECIAL[NATURAL_8]) : SPECIAL[INTEGER_8]
 		local
 			i: INTEGER
-			l_encoder: UTF8_ENCODER
 		do
-			create Result.make_empty
-			create l_encoder
+
+			create Result.make_filled (0,a_bytes.count)
 			across a_bytes as c
 				loop
-   					Result.append_code (c.item)
+   					Result.put(to_byte(c.item.as_integer_8), i)
+					i := i + 1
 				end
-			Result := (create{SHARED_BASE64}).base64_encoder.encoded_string(l_encoder.encoded_string (Result))
 		end
 
 	to_byte (a_val : INTEGER) : INTEGER_8
@@ -86,4 +86,76 @@ feature {NONE} --Implementation
 		ensure
 			result_value :  127 >= Result and Result >= -128
 		end
+
+	encode_base_64 (bytes:SPECIAL[INTEGER_8]) : STRING_8
+			-- Encodes a byte array into a STRING doing base64 encoding.
+		local
+			l_output : SPECIAL[INTEGER_8]
+			l_remaining : INTEGER
+			i,ptr: INTEGER
+			char : CHARACTER
+		do
+			create l_output.make_filled (0, ((bytes.count + 2)//3)*4)
+			l_remaining := bytes.count
+			from
+				i := 0
+				ptr := 0
+			until
+				l_remaining <= 3
+			loop
+				l_output[ptr] := encode_value (bytes[i] |>> 2)
+				ptr := ptr + 1
+				l_output[ptr] := encode_value (((bytes[i] & 0x3) |<< 4 ) | ((bytes[i + 1] |>> 4) & 0xF))
+				ptr := ptr + 1
+			    l_output[ptr] := encode_value (((bytes[i + 1] & 0xF) |<< 2) | ((bytes[i + 2] |>> 6) & 0x3))
+			    ptr := ptr + 1
+		        l_output[ptr] := encode_value (bytes[i + 2] & 0x3F)
+				ptr := ptr + 1
+				l_remaining := l_remaining -3
+				i := i + 3
+			end
+			 -- encode when exactly 1 element (left) to encode
+	        char := '='
+	        if l_remaining = 1 then
+	            l_output[ptr] := encode_value (bytes[i] |>> 2)
+	            ptr := ptr + 1
+	            l_output[ptr] := encode_value (((bytes[i]) & 0x3) |<< 4)
+	            ptr := ptr + 1
+	            l_output[ptr] := char.code.as_integer_8
+	            ptr := ptr + 1
+	            l_output[ptr] := char.code.as_integer_8
+	        	ptr := ptr + 1
+	        end
+
+	         -- encode when exactly 2 elements (left) to encode
+	        if l_remaining = 2 then
+	            l_output[ptr] := encode_value (bytes[i] |>> 2)
+	            ptr := ptr + 1
+	            l_output[ptr] := encode_value (((bytes[i] & 0x3) |<< 4)| ((bytes[i + 1] |>> 4) & 0xF));
+	            ptr := ptr + 1
+	            l_output[ptr] := encode_value ((bytes[i + 1] & 0xF) |<< 2);
+	            ptr := ptr + 1
+	            l_output[ptr] := char.code.as_integer_8
+	            ptr := ptr + 1
+	     	end
+	     	Result := ""
+	     	across l_output as elem
+	     		loop
+	     			Result.append_character (elem.item.to_character_8)
+	     		end
+		end
+
+	base64_map: SPECIAL [CHARACTER_8]
+			-- Table for Base64 encoding
+		once
+			Result := ("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/").area
+		end
+
+	encode_value (i: INTEGER_8) : INTEGER_8
+		do
+			Result := base64_map[i & 0x3F].code.as_integer_8
+		end
+
+
+
 end

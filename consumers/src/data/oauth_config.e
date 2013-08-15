@@ -86,4 +86,12 @@ feature -- Change Element
 			grant_type_set: attached grant_type as l_grant_type implies l_grant_type = a_type
 		end
 
+	set_signature_type (a_signature: OAUTH_SIGNATURE_TYPE)
+			-- Set signature_type with `a_signature'
+		do
+			signature_type := a_signature
+		ensure
+			signature_type_set: attached signature_type as l_signature_type implies l_signature_type = a_signature
+		end
+
 end

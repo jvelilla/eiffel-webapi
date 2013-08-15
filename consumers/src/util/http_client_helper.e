@@ -29,12 +29,12 @@ feature -- Access
 				sess.set_connect_timeout (-1)
 				sess.set_is_insecure (True)
 				sess.set_any_auth_type
-				debug ("curl")
+--				debug ("curl")
 					sess.set_is_debug (True)
-				end
-				debug ("proxy8888")
+--				end
+--				debug ("proxy8888")
 					sess.set_proxy ("127.0.0.1", 8888) --| inspect traffic with http://www.fiddler2.com/					
-				end
+--				end
 			end
 		end
 
@@ -74,7 +74,7 @@ feature -- HTTP client helpers
 
 	context_executor: HTTP_CLIENT_REQUEST_CONTEXT
 			-- request context for each request
-		do
+		once
 			create Result.make
 		end
 

@@ -21,8 +21,10 @@ feature -- Extractor
 			l_parameters : STRING_TABLE[STRING]
 			header: STRING_32
 			l_element : STRING_32
+			l_encoder : OAUTH_ENCODER
 		do
 			l_parameters := request.outh_parameters
+			create l_encoder
 			create header.make (l_parameters.count * Estimated_param_length)
 			header.append (Preamble)
 			from
@@ -35,7 +37,7 @@ feature -- Extractor
 				end
 				create l_element.make_from_string (Header_template)
 				l_element.replace_substring_all ("$KEY", l_parameters.key_for_iteration.as_string_8)
-				l_element.replace_substring_all ("$VALUE", l_parameters.item_for_iteration.as_string_8)
+				l_element.replace_substring_all ("$VALUE", l_encoder.encoded_string (l_parameters.item_for_iteration.as_string_8))
 				header.append (l_element)
 				l_parameters.forth
 			end
