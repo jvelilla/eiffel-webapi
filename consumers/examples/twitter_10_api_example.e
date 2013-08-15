@@ -70,7 +70,7 @@ feature {NONE} -- Implementation
 
 	api_key : STRING ="6icbcAXyZx67r8uTAUM5Qw"
 	api_secret :STRING ="SCCAdUUc6LXxiazxH3N0QfpNUvlUy84mZ2XZKiv39s"
-	protected_resource_url : STRING = "https://api.twitter.com/1/statuses/update.json";
+	protected_resource_url : STRING = "https://api.twitter.com/1.1/statuses/update.json";
  	empty_token : detachable  OAUTH_TOKEN
 
 end
