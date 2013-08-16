@@ -40,13 +40,13 @@ feature {NONE} -- Implementation
 		deferred
 		end
 
-	Request_token_endpoint_url: STRING
+	request_token_endpoint_url: STRING
 		deferred
 		end
 
-	Access_token_endpoint_url: STRING
+	access_token_endpoint_url: STRING
 		deferred
 		end
-		
+
 
 end

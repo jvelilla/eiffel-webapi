@@ -23,10 +23,10 @@ feature -- Access
 			--Extract token definition
 			if response.has_substring (Token_definition) then
 				l_token_index := response.substring_index (Token_definition, 1)
-				l_extract := response.substring (token_definition.count + 1, response.count).as_string_8
+				l_extract := response.substring (token_definition.count + l_token_index, response.count).as_string_8
 				l_param_index := l_extract.index_of (parameter_separator, 1)
-				if l_param_index /= 0 then
-					l_extract := l_extract.substring (1, l_param_index - 1)
+				if l_param_index /= 0 and then l_param_index > l_token_index then
+					l_extract := l_extract.substring (1 , l_param_index - 1)
 				end
 				l_decoded := (create {OAUTH_ENCODER}).decoded_string (l_extract)
 				create Result.make_token_secret_response (l_decoded, empty_secret, response.as_string_8)
@@ -34,10 +34,10 @@ feature -- Access
 				-- Extract Secret token definition
 				if response.has_substring (Secret_token_definition) then
 					l_token_index := response.substring_index (Secret_token_definition, 1)
-					l_extract := response.substring (Secret_token_definition.count + 1, response.count).as_string_8
+					l_extract := response.substring (Secret_token_definition.count + l_token_index, response.count).as_string_8
 					l_param_index := l_extract.index_of (parameter_separator, 1)
-					if l_param_index /= 0 then
-						l_extract := l_extract.substring (1, l_param_index - 1)
+					if l_param_index /= 0  then
+						l_extract := l_extract.substring (1 , l_param_index - 1)
 					end
 					l_decoded := (create {OAUTH_ENCODER}).decoded_string (l_extract)
 					Result.set_secret (l_decoded)

@@ -1,11 +1,11 @@
 note
-	description: "Summary description for {OAUTH_DROPBOX_10_API}."
+	description: "Summary description for {OAUTH_10_DROPBOX_API}."
 	author: ""
 	date: "$Date$"
 	revision: "$Revision$"
 
 class
-	OAUTH_DROPBOX_10_API
+	OAUTH_10_DROPBOX_API
 
 inherit
 

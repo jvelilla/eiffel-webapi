@@ -38,8 +38,8 @@ feature -- Tests
 			create l_extractor
 			l_token := l_extractor.extract (l_response)
 			if l_token /= Void then
-				assert("Expected token:hh5s93j4hdidpola",l_token.token.is_equal ("hh5s93j4hdidpola"))
-				assert("Expected secret:hdhd0244k9j7ao03",l_token.secret.is_equal ("hdhd0244k9j7ao03"))
+				assert("Expected token:hh5s93j4hdidpola",l_token.secret.is_equal ("hh5s93j4hdidpola"))
+				assert("Expected secret:hdhd0244k9j7ao03",l_token.token.is_equal ("hdhd0244k9j7ao03"))
 			end
 		end
 
@@ -55,6 +55,22 @@ feature -- Tests
 			if l_token /= Void then
 				assert("Expected token:hh5s93j4hdidpola",l_token.token.is_equal ("hh5s93j4hdidpola"))
 				assert("Expected secret:hdhd0244k9j7ao03",l_token.secret.is_equal ("hdhd0244k9j7ao03"))
+			end
+		end
+
+
+	test_extract_token_from_inverted_oauth_standard_response_with_callback_confirmed
+		local
+			l_response: STRING
+			l_token: detachable OAUTH_TOKEN
+			l_extractor: TOKEN_EXTRACTOR_10
+		do
+			l_response := "oauth_callback_confirmed=true&oauth_token=72157635100605416-d834a8fae380fdaf&oauth_token_secret=fc90c0eceed0c0b6"
+			create l_extractor
+			l_token := l_extractor.extract (l_response)
+			if l_token /= Void then
+				assert("Expected token:72157635100605416-d834a8fae380fdaf",l_token.token.is_equal ("72157635100605416-d834a8fae380fdaf"))
+				assert("Expected secret:fc90c0eceed0c0b6",l_token.secret.is_equal ("fc90c0eceed0c0b6"))
 			end
 		end
 

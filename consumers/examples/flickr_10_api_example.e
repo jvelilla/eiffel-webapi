@@ -13,20 +13,17 @@ feature {NONE} -- Initialization
 
 	make
 		local
-			service: OAUTH_10_SERVICE
-			config: OAUTH_CONFIG
-			signature_type: OAUTH_SIGNATURE_TYPE
-			flickr : OAUTH_10_FLICKR_API
-			request_token, access_token : detachable OAUTH_TOKEN
-			verifier : OAUTH_VERIFIER
-			request : OAUTH_REQUEST
+			api: API_BUILDER
+			request_token, access_token: detachable OAUTH_TOKEN
+			verifier: OAUTH_VERIFIER
+			request: OAUTH_REQUEST
+			service: OAUTH_SERVICE_I
 		do
-			create signature_type.make
-			create config.make_default (Api_key, Api_secret)
-			config.set_callback ("oob")
-			config.set_signature_type (signature_type)
-			create flickr
-			create service.make (flickr,config)
+			create api
+			service := api.with_api (create {OAUTH_10_FLICKR_API})
+								.with_api_key (api_key)
+								.with_api_secret (api_secret)
+								.build
 
 			print ("%N=== Flickr's OAuth Workflow ===%N");
 
@@ -64,7 +61,7 @@ feature {NONE} -- Initialization
 
 feature {NONE} -- Implementation	
 	Protected_resource_url: STRING = "http://api.flickr.com/services/rest/"
-	Api_key: STRING  ="5e2606af8464eb691b435dab4e2cfc3f"
-	Api_secret: STRING ="b45421be0f097194"
+	Api_key: STRING  ="165d81aa1767fdcd5c4bf3acbc80c9eb"
+	Api_secret: STRING ="9e3c167c0a84a6dd"
 end
 
