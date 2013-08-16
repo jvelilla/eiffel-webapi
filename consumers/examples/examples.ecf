@@ -43,5 +43,9 @@
 	<target name="flickr_example" extends="oauth_20_examples">
 		<root class="FLICKR_10_API_EXAMPLE" feature="make"/>
 	</target>
+	<target name="yahoo_example" extends="oauth_20_examples">
+		<root class="YAHOO_10_API_EXAMPLE" feature="make"/>
+	</target>
+	
 	
 </system>
