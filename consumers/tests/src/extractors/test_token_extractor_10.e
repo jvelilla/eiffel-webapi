@@ -58,6 +58,24 @@ feature -- Tests
 			end
 		end
 
+	test_extract_token_from_inverted_oauth_standard_response_with_callback_true
+		local
+			l_response: STRING
+			l_token: detachable OAUTH_TOKEN
+			l_extractor: TOKEN_EXTRACTOR_10
+		do
+			l_response := "oauth_token_secret=C6ehBPh3X7YWPYveWecQtPpAMGZP7uwU&oauth_token=RUhgxLKZgZvujSWpb6&oauth_callback_confirmed=true	"
+			create l_extractor
+			l_token := l_extractor.extract (l_response)
+			if l_token /= Void then
+				assert("Expected token:hh5s93j4hdidpola",l_token.token.is_equal ("RUhgxLKZgZvujSWpb6"))
+				assert("Expected secret:hdhd0244k9j7ao03",l_token.secret.is_equal ("C6ehBPh3X7YWPYveWecQtPpAMGZP7uwU"))
+			end
+		end
+
+
+
+
 
 	test_extract_token_from_inverted_oauth_standard_response_with_callback_confirmed
 		local

@@ -49,6 +49,11 @@
 	<target name="dropbox_example" extends="oauth_20_examples">
 		<root class="DROPBOX_10_API_EXAMPLE" feature="make"/>
 	</target>
+		<target name="bitbucket_example" extends="oauth_20_examples">
+		<root class="BITBUCKET_10_API_EXAMPLE" feature="make"/>
+	</target>
+
+	
 	
 	
 </system>

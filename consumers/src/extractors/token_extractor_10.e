@@ -25,7 +25,7 @@ feature -- Access
 				l_token_index := response.substring_index (Token_definition, 1)
 				l_extract := response.substring (token_definition.count + l_token_index, response.count).as_string_8
 				l_param_index := l_extract.index_of (parameter_separator, 1)
-				if l_param_index /= 0 and then l_param_index > l_token_index then
+				if l_param_index /= 0 then
 					l_extract := l_extract.substring (1 , l_param_index - 1)
 				end
 				l_decoded := (create {OAUTH_ENCODER}).decoded_string (l_extract)
