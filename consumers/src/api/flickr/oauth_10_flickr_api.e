@@ -12,21 +12,21 @@ inherit
 
 	OAUTH_10_TEMPLATE_API
 			redefine
-				request_token_verb,
-				access_token_verb
+--				request_token_verb,
+--				access_token_verb
 			end
 
 feature -- Access
 
-	request_token_verb: READABLE_STRING_GENERAL
-		do
-			Result := "GET"
-		end
+--	request_token_verb: READABLE_STRING_GENERAL
+--		do
+--			Result := "GET"
+--		end
 
-	access_token_verb: READABLE_STRING_GENERAL
-		do
-			Result := "GET"
-		end
+--	access_token_verb: READABLE_STRING_GENERAL
+--		do
+--			Result := "GET"
+--		end
 
 feature {NONE} -- Implementation
 

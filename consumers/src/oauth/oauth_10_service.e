@@ -73,7 +73,9 @@ feature -- Access
 	sign_request (a_access_token: OAUTH_TOKEN; a_req: OAUTH_REQUEST)
 			-- Signs an OAuth request using an access token (obtained previously)
 		do
-			a_req.add_query_string_parameter ({OAUTH_CONSTANTS}.access_token, a_access_token.token)
+			a_req.add_parameter ({OAUTH_CONSTANTS}.token,a_access_token.token)
+		 	set_oauth_params (a_req, a_access_token)
+			append_signature (a_req)
 		end
 
 	authorization_url (a_request_token: detachable OAUTH_TOKEN): detachable READABLE_STRING_GENERAL

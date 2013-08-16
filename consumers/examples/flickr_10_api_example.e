@@ -35,6 +35,7 @@ feature {NONE} -- Initialization
 			if attached  service.authorization_url (request_token) as l_auth_url then
 				print (l_auth_url + "&perms=read");
    				print ("%N Copy the verifier here%N")
+				io.read_line
 			end
 
 			access_token := service.access_token_get (request_token, create {OAUTH_VERIFIER}.make (io.last_string))
@@ -61,7 +62,7 @@ feature {NONE} -- Initialization
 
 feature {NONE} -- Implementation	
 	Protected_resource_url: STRING = "http://api.flickr.com/services/rest/"
-	Api_key: STRING  ="165d81aa1767fdcd5c4bf3acbc80c9eb"
-	Api_secret: STRING ="9e3c167c0a84a6dd"
+	Api_key: STRING  =""
+	Api_secret: STRING =""
 end
 
