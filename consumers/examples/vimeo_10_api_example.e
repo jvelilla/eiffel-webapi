@@ -1,11 +1,11 @@
 note
-	description: "Summary description for {TWITTER_10_API_EXAMPLE}."
+	description: "Summary description for {VIMEO_10_API_EXAMPLE}."
 	author: ""
 	date: "$Date$"
 	revision: "$Revision$"
 
 class
-	TWITTER_10_API_EXAMPLE
+	VIMEO_10_API_EXAMPLE
 
 create
 	make
@@ -14,8 +14,6 @@ feature {NONE} -- Initialization
 
 	make
 		local
-			box: OAUTH_10_TWITTER_API
-			config : OAUTH_CONFIG
 			api_service : OAUTH_SERVICE_I
 			request : OAUTH_REQUEST
 			access_token,request_token : detachable OAUTH_TOKEN
@@ -23,10 +21,7 @@ feature {NONE} -- Initialization
 			api_builder: API_BUILDER
 		do
 			create api_builder
-			create signature.make
-			signature.mark_query_string
-
-			api_service := api_builder.with_api (create {OAUTH_10_TWITTER_API})
+			api_service := api_builder.with_api (create {OAUTH_10_VIMEO_API})
 												.with_api_key (api_key)
 												.with_api_secret (api_secret)
 												.build
@@ -54,8 +49,8 @@ feature {NONE} -- Initialization
 
 	      	  --Now let's go and ask for a protected resource!
 	    	  print("%NNow we're going to access a protected resource...%N");
-	    	  create request.make ("GET", protected_resource_url)
-			  request.add_query_string_parameter ("screen_name", "velillaj")
+	    	  create request.make ("POST", protected_resource_url)
+			  request.add_body_parameter ("status", "testing!!!")
 	 		  api_service.sign_request (l_access_token, request)
 	    	  if attached {OAUTH_RESPONSE} request.execute as l_response then
 					print ("%NOk, let see what we found...")
@@ -73,9 +68,10 @@ feature {NONE} -- Implementation
 
 	api_key : STRING =""
 	api_secret :STRING =""
-	protected_resource_url : STRING = "https://api.twitter.com/1.1/users/lookup.json";
-
+	protected_resource_url : STRING = ""
  	empty_token : detachable  OAUTH_TOKEN
 
 end
+
+
 

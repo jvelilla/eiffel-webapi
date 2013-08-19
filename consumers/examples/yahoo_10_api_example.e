@@ -59,8 +59,8 @@ feature {NONE} -- Initialization
 
 feature {NONE} -- Implementation
 
-	api_key : STRING ="dj0yJmk9ekJJTERwUkpONXJ1JmQ9WVdrOVdtdFpjamhZTnpBbWNHbzlNVGMwTVRZMU56STJNZy0tJnM9Y29uc3VtZXJzZWNyZXQmeD0yZg--"
-	api_secret :STRING ="6d7a8d3f696cdc32ad470ddea8065ba4c1ab0fde"
+	api_key : STRING =""
+	api_secret :STRING =""
 	protected_resource_url : STRING = "";
  	empty_token : detachable  OAUTH_TOKEN
 

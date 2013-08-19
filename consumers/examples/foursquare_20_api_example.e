@@ -63,8 +63,8 @@ feature {NONE} -- Initialization
 
 feature {NONE} -- Implementation
 
-	api_key : STRING ="HMXW41EXSOUQFFXCZWGLCYBNPCLCEDSQGWHTWI0WJKFRMV3A"
-	api_secret :STRING ="XZ3Y1R5CBNUIQ0HTM4KOKWVXHXCJM35ET50VZ00YKZPFWKKQ"
+	api_key : STRING =""
+	api_secret :STRING =""
 	protected_resource_url : STRING = "https://api.foursquare.com/v2/users/self/friends?oauth_token=";
  	empty_token : detachable  OAUTH_TOKEN
 

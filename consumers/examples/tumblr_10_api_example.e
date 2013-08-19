@@ -1,11 +1,11 @@
 note
-	description: "Summary description for {TWITTER_10_API_EXAMPLE}."
+	description: "Summary description for {TUMBLR_10_API_EXAMPLE}."
 	author: ""
 	date: "$Date$"
 	revision: "$Revision$"
 
 class
-	TWITTER_10_API_EXAMPLE
+	TUMBLR_10_API_EXAMPLE
 
 create
 	make
@@ -14,7 +14,6 @@ feature {NONE} -- Initialization
 
 	make
 		local
-			box: OAUTH_10_TWITTER_API
 			config : OAUTH_CONFIG
 			api_service : OAUTH_SERVICE_I
 			request : OAUTH_REQUEST
@@ -23,14 +22,11 @@ feature {NONE} -- Initialization
 			api_builder: API_BUILDER
 		do
 			create api_builder
-			create signature.make
-			signature.mark_query_string
-
-			api_service := api_builder.with_api (create {OAUTH_10_TWITTER_API})
+			api_service := api_builder.with_api (create {OAUTH_10_TUMBLR_API})
 												.with_api_key (api_key)
-												.with_api_secret (api_secret)
+												.with_api_secret (api_secret).with_callback ("http://www.eiffelroom.com")
 												.build
-			print ("%N===Twitter OAuth Workflow ===%N")
+			print ("%N===Yahoo OAuth Workflow ===%N")
 
 		 	-- Obtain the Request Token
 		 	print ("%NGet the request token%N")
@@ -55,8 +51,7 @@ feature {NONE} -- Initialization
 	      	  --Now let's go and ask for a protected resource!
 	    	  print("%NNow we're going to access a protected resource...%N");
 	    	  create request.make ("GET", protected_resource_url)
-			  request.add_query_string_parameter ("screen_name", "velillaj")
-	 		  api_service.sign_request (l_access_token, request)
+			  api_service.sign_request (l_access_token, request)
 	    	  if attached {OAUTH_RESPONSE} request.execute as l_response then
 					print ("%NOk, let see what we found...")
 					print ("%NResponse: STATUS" + l_response.status.out)
@@ -71,11 +66,11 @@ feature {NONE} -- Initialization
 
 feature {NONE} -- Implementation
 
-	api_key : STRING =""
-	api_secret :STRING =""
-	protected_resource_url : STRING = "https://api.twitter.com/1.1/users/lookup.json";
-
+	api_key : STRING ="bZIRfo7mhylo6jCpvlnVABSDYAodnDKTVn3ZAbKj0fcyLfPemW"
+	api_secret :STRING ="RBtBWdAvmqRTjlXgqLEjkjTAS7coDOdacKX3nKXCzywoXwjtQc"
+	protected_resource_url : STRING = "http://api.tumblr.com/v2/blog/good.tumblr.com/info"
  	empty_token : detachable  OAUTH_TOKEN
 
 end
+
 

@@ -66,8 +66,8 @@ feature {NONE} -- Initialization
 
 feature {NONE} -- Implementation
 
-	api_key : STRING ="cjie9iirkm6gaqh"
-	api_secret :STRING ="xawxbnvi3bjvcds"
+	api_key : STRING =""
+	api_secret :STRING =""
 	protected_resource_url : STRING = "https://api.dropbox.com/1/account/info";
  	empty_token : detachable  OAUTH_TOKEN
 

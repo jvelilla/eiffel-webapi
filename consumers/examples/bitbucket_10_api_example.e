@@ -65,7 +65,7 @@ feature {NONE} -- Initialization
 
 feature {NONE} -- Implementation	
 	Protected_resource_url: STRING = "https://bitbucket.org/api/1.0/user/repositories"
-	Api_key: STRING  ="sHHtszD2tHmBpLjm4b"
-	Api_secret: STRING ="HEhp5AUGnB4DVYhDW3UPLyzfmLexKMBr"
+	Api_key: STRING  =""
+	Api_secret: STRING =""
 end
 

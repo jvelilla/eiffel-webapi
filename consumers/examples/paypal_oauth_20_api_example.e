@@ -49,8 +49,8 @@ feature -- Access
 
 feature {NONE} -- Implementation
 
-	api_key : STRING ="AdzYXxATcMSu80k-KDbNRJWv5_nXtCO0gNCxzMcRH1hoCAz2ldpM6fae2UHO"
-	api_secret :STRING ="EH4OmxCbGyTpGhS_NyR7ujQlS2vglUwv0mgQ9TDN6ovTMD_csIjY2D3Fu67-"
+	api_key : STRING =""
+	api_secret :STRING =""
 	protected_resource_url : STRING = "https://api.sandbox.paypal.com/v1/payments/"
  	empty_token : detachable  OAUTH_TOKEN
 

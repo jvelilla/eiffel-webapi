@@ -53,8 +53,8 @@ feature {NONE} -- Initialization
 
 feature {NONE} -- Implementation
 
-	api_key : STRING ="d4a4cac14b7fd78866116ef2e67af27b"
-	api_secret :STRING ="e29e65160c01ab548e983716cedd20c5"
+	api_key : STRING =""
+	api_secret :STRING =""
 	protected_resource_url : STRING = "https://developers.geoloqi.com/api/trigger/list";
  	empty_token : detachable  OAUTH_TOKEN
 

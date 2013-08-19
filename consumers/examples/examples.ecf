@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="ISO-8859-1"?>
 <system xmlns="http://www.eiffel.com/developers/xml/configuration-1-11-0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.eiffel.com/developers/xml/configuration-1-11-0 http://www.eiffel.com/developers/xml/configuration-1-11-0.xsd" name="examples" uuid="533DEB07-C4A6-4EEE-8EC1-4F09DC203A26">
 	<target name="oauth_20_examples">
 		<option warning="true">
@@ -49,11 +49,19 @@
 	<target name="dropbox_example" extends="oauth_20_examples">
 		<root class="DROPBOX_10_API_EXAMPLE" feature="make"/>
 	</target>
-		<target name="bitbucket_example" extends="oauth_20_examples">
+	<target name="bitbucket_example" extends="oauth_20_examples">
 		<root class="BITBUCKET_10_API_EXAMPLE" feature="make"/>
+		<option debug="true">
+			<debug name="__unnamed_debug__" enabled="true"/>
+			<debug name="curl" enabled="true"/>
+			<debug name="proxy8888" enabled="true"/>
+		</option>
+	</target>
+	<target name="vimeo_example" extends="oauth_20_examples">
+		<root class="VIMEO_10_API_EXAMPLE" feature="make"/>
+	</target>
+		<target name="tumblr_example" extends="oauth_20_examples">
+		<root class="TUMBLR_10_API_EXAMPLE" feature="make"/>
 	</target>
 
-	
-	
-	
 </system>

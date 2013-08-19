@@ -64,8 +64,8 @@ feature {NONE} -- Initialization
 
 feature {NONE} -- Implementation
 
-	api_key : STRING ="99248"
-	api_secret :STRING ="3Vd3Aw3LCyu38tW393W333zy0HNc33anDJlM9u3J3fdc3U1B3o333fsA3ufv3aq3u35350UIZ3u3H333"
+	api_key : STRING =""
+	api_secret :STRING =""
 	protected_resource_url : STRING = "https://api.createsend.com/api/v3/clients.json?pretty=true";
  	empty_token : detachable  OAUTH_TOKEN
 
