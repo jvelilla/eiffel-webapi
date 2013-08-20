@@ -60,8 +60,14 @@
 	<target name="vimeo_example" extends="oauth_20_examples">
 		<root class="VIMEO_10_API_EXAMPLE" feature="make"/>
 	</target>
-		<target name="tumblr_example" extends="oauth_20_examples">
+	<target name="tumblr_example" extends="oauth_20_examples">
 		<root class="TUMBLR_10_API_EXAMPLE" feature="make"/>
+	</target>
+	<target name="linkedin_example" extends="oauth_20_examples">
+		<root class="LINKEDIN_10_API_EXAMPLE" feature="make"/>
+	</target>
+	<target name="yelp_example" extends="oauth_20_examples">
+		<root class="YELP_10_API_EXAMPLE" feature="make"/>
 	</target>
 
 </system>

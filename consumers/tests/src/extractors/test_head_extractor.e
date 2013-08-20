@@ -17,10 +17,12 @@ feature -- Test
 		local
 			l_extractor: HEADER_EXTRACTOR_10
 			l_request: OAUTH_REQUEST
-			l_expected: STRING_8
+			l_expected: STRING_32
 		do
 			l_request := (create {OAUTH_REQUEST_FIXTURE_FACTORY}).default_request
-			l_expected :="OAuth oauth_callback=%"http://example/callback%", oauth_consumer_key=%"AS#$^*@&%", oauth_signature=%"OAuth-Signature%", oauth_timestamp=%"123456%""
+			l_expected :="[
+						OAuth oauth_timestamp="123456", oauth_consumer_key="AS%23%24%5E%2A%40%26", oauth_callback="http%3A%2F%2Fexample%2Fcallback", oauth_signature="OAuth-Signature"
+							]"
 			l_expected.left_adjust
 			l_expected.right_adjust
 			create l_extractor
